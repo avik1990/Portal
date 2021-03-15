@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.cesu.itcc05.consumeportal.PaymentDashboardActivity">
+<ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/scrollView2">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentEnd="false"
+        android:gravity="left">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/please_select_payment_getways"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:textColor="#6d0000"
+                android:layout_gravity="center_horizontal" />
+
+        <RadioGroup
+            android:layout_width="339dp"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:id="@+id/radioGroup"    >
+
+                <RadioButton
+                    android:drawableLeft="@drawable/paytm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/paytm"
+                    android:checked="false"
+                    android:textSize="18dp"
+                    android:layout_gravity="left"
+                    android:textColor="#f8f8ff"
+                    android:textStyle="bold"
+                    android:text="1."
+
+                    />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/bbps"
+                    android:checked="false"
+                    android:textSize="18dp"
+                    android:layout_weight="0.13"
+                    android:layout_gravity="left"
+                    android:textStyle="bold"
+                    android:textColor="#f8f8ff"
+                    android:text="2." />
+        </RadioGroup>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="144dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/bbpou_name"
+                android:id="@+id/textView23"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="150sp"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="1.AIRTEL PAYMENTS BANK LIMITED"
+                android:layout_gravity="bottom"
+                android:textColor="#040000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="2.ALLAHABAD BANK"
+                android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="3.ANDHRA BANK"
+                android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="4.AXIS BANK LIMITED"
+                android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="5.BANDHAN BANK LIMITED"
+                android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="6.BANK OF BARODA"
+                android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="7.BANK OF INDIA"
+                android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="8.CANARA BANK"
+                android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="9.CAPITAL SMALL FINANCE BANK LIMITED"
+                android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="10.CENTRAL BANK OF INDIA"
+                android:layout_gravity="bottom"
+                android:textColor="#040000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="11.CITY UNION BANK "
+                android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="12. CORPORATION BANK "
+                android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="13. CSC E GOVERNANCE SERVICES INDIA LIMITED "
+                android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="14. DBS BANK LIMITED "
+                android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="15. DCB BANK LIMITED "
+                android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="16. DHANLAXMI BANK LIMITED "
+                android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="17. DOMBIVLI NAGRI SAHAKARI B ANK LIMITED "
+                android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="18. EbixCash "
+                android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="19. EQUITAS SMALL FINANCE BANK LIMITED "
+                android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="20. ESAF SMALL FINANCE BANK "
+                android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="21. EURONET SERVICES INDIA PRIVATE LIMITED "
+                android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="22. GOPINATH PATIL PARSIK JANATA SAHAKA... "
+                android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="23. HDFC BANK LIMITED "
+                android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="24. ICICI BANK LIMITED "
+                android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="25. IDBI BANK LIMITED "
+                android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="26. IDFC FIRST BANK LIMITED "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="27. INDIAIDEAS.COM LIMITED "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="28. INDIAN BANK "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="29. INDIAN OVERSEAS BANK "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="30. INDUSIND BANK LIMITED "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="31. INFIBEAM AVENUE PRIVATE LTD "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="32. JANATA SAHAKARI BANK LTD "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="33. JIO PAYMENTS BANK "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="34. KERALA GRAMIN BANK "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="35. KOTAK MAHINDRA BANK LIMITED "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="36. NSDL PAYMENTS BANK "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="37. ONE MOBIKWIK SYSTEMS PRIVATE LIMITED "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="38. ORIENTAL BANK OF COMMERCE "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="39. OXIGEN SERVICES INDIA PRIVATE LIMITED "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="40. PAYTM PAYMENTS BANK LIMITED "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="41. PAYU PAYMENTS PRIVATE LIMITED "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="42. PRAGATHI KRISHNA GRAMIN BANK "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="43. PUNJAB AND SIND BANK "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="44. PUNJAB NATIONAL BANK "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="44. PUNJAB NATIONAL BANK "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="44. PUNJAB NATIONAL BANK "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="44. PUNJAB NATIONAL BANK "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="44. PUNJAB NATIONAL BANK "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="47. STANDARD CHARTERED BANK "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="48. STATE BANK OF INDIA "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="49. SVC CO-OPERATIVE BANK LIMITED "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="50. SYNDICATE BANK "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="51. TAMILNAD MERCANTILE BANK LIMITED "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="52. THE AP MAHESH COOP URBAN BANK "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="53. THE CATHOLIC SYRIAN BANK LTD "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="54. THE FEDERAL BANK LIMITED "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="55. THE JAMMU AND KASHMIR BANK LIMITED "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="56. THE KALUPUR COMMERCIAL CO-OPERATI... "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="57. THE KARUR VYSYA BANK LTD "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="58. THE LAKSHMI VILAS BANK LIMITED "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="59. THE SARASWAT CO-OPERATIVE BANK LIMITED "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="60. THE SOUTH INDIAN BANK LIMITED "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="61. TJSB SAHAKARI BANK LIMITED "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="62. UCO BANK "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="63. UNION BANK OF INDIA "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="64. UNITED BANK OF INDIA "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="65. UTKARSH SMALL FINANCE BANK LTD "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="66. YES BANK LIMITED "
+                 android:layout_gravity="bottom"
+                android:textColor="#040000" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+
+</ScrollView>
+
+
+
+</RelativeLayout>

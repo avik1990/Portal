@@ -1,0 +1,744 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/layout"
+    android:background="@color/White"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/iv_backs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_chevron_left_24"
+        app:layout_constraintTop_toTopOf="@+id/iv_logo"
+        android:paddingTop="@dimen/_15sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:paddingStart="@dimen/_5sdp"
+        android:paddingEnd="@dimen/_5sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+
+
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:src="@drawable/logo_new"
+        android:visibility="visible"
+        app:layout_constraintStart_toEndOf="@+id/iv_backs"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register_complaint"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@+id/iv_logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="18sp"
+        />
+    <TextView
+        android:id="@+id/tv_text_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/please_provide_details_to_register_view_complaint"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        android:textColor="@color/colorVerify"
+        />
+
+
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_text_register"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <RadioButton
+            android:id="@+id/regcoml"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/register_complain"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            ></RadioButton>
+        <RadioButton
+            android:id="@+id/comsts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/view_status"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            ></RadioButton>
+    </RadioGroup>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/consid1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+        android:background="@drawable/rectangular_shape"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:id="@+id/iv_user"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/userid"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="5dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toEndOf="@+id/iv_user"
+            />
+
+        <EditText
+            android:id="@+id/consIDval"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/enter_consumer_number"
+            android:background="@android:color/transparent"
+            android:imeOptions="actionNext"
+            android:paddingStart="10dp"
+            android:maxLength="12"
+            android:textSize="@dimen/_12sdp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view"
+            />
+
+        <Spinner
+            android:id="@+id/spinner2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view"
+            ></Spinner>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="25dp"
+        android:text=""
+         android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/consid1"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintTop_toTopOf="@+id/consid1"
+        app:layout_constraintBottom_toBottomOf="@+id/consid1"
+        android:id="@+id/hint"
+        android:background="@drawable/hint"
+        android:layout_marginLeft="15dp" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tblrw2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toBottomOf="@+id/consid1"
+        android:background="@drawable/rectangular_shape"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:id="@+id/iv_user1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/phone"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="5dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toEndOf="@+id/iv_user1"
+            />
+        <EditText
+            android:id="@+id/mobval"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/enter_phoner_number"
+            android:inputType="phone"
+            android:background="@android:color/transparent"
+            android:singleLine="true"
+            android:paddingStart="10dp"
+            android:textSize="@dimen/_12sdp"
+
+            android:maxLength="10"
+            android:imeOptions="actionNext"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view1"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tblrw5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tblrw2"
+        android:text="@string/sms_communication_sent_to_this_number"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+
+        />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tblrw3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toBottomOf="@+id/tblrw5"
+        android:background="@drawable/rectangular_shape"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:id="@+id/iv_user2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_baseline_email_24"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="5dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toEndOf="@+id/iv_user2"
+            />
+        <EditText
+            android:id="@+id/emailval"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/enter_email_id"
+            android:background="@android:color/transparent"
+            android:textColor="@color/black"
+            android:inputType="textEmailAddress"
+            android:textSize="@dimen/_12sdp"
+
+            android:singleLine="true"
+            android:paddingStart="10dp"
+            android:imeOptions="actionDone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view2"
+            />
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tblrw4"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toBottomOf="@+id/tblrw3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        android:background="@drawable/rectangular_shape"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:id="@+id/iv_user_3"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/userid"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="5dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <View
+            android:id="@+id/view23"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toEndOf="@+id/iv_user_3"
+            />
+        <TextView
+            android:id="@+id/conNm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/user_name"
+            android:background="@android:color/transparent"
+            android:imeOptions="actionNext"
+            android:paddingStart="10dp"
+            android:textSize="16sp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view23"
+            />
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tbl1"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        app:layout_constraintTop_toBottomOf="@+id/tblrw4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/rectangular_shape"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:id="@+id/iv_user_31"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_baseline_add_location_24"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="5dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <View
+            android:id="@+id/view223"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toEndOf="@+id/iv_user_31"
+            />
+        <EditText
+            android:id="@+id/Addr"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/enter_address"
+            android:background="@android:color/transparent"
+            android:imeOptions="actionNext"
+            android:singleLine="true"
+            android:gravity="top|start"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            android:paddingStart="10dp"
+            android:paddingTop="5dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view223"
+            />
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tbl1"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/tblrw6">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tmcnd"
+            android:checked="true" />
+        <TextView
+            android:id="@+id/tncLabel"
+            android:layout_width="wrap_content"
+            android:autoLink="all"
+            android:text="@string/agree_term_amp_conditions"
+            android:textSize="14dp"
+            android:textColor="#030000"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:text="@string/know_more"
+            android:id="@+id/bttrmscnd"
+            android:visibility="gone"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="20dp" />
+    </TableRow>
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tblrw6"
+        app:layout_goneMarginTop="20dp"
+        android:background="@drawable/rectangular_shape_primary"
+        android:layout_marginTop="20dp"
+        android:text="@string/next"
+        android:textColor="@color/White"
+        android:textAllCaps="false"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:progressDrawable="@drawable/circular_progress_bar"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="-300dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+<!--<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:color="@color/bordercolor1"
+    android:layout_gravity="center_horizontal"
+    android:id="@+id/layout"
+    android:layout_marginTop="5dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center_vertical">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Please provide details "
+            android:id="@+id/textView19"
+            android:textColor="#530404"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/customborder">
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal">
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:weightSum="1"
+                        android:id="@+id/radioGroup"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal">
+                        <RadioButton
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/regcoml"
+                            android:checked="true"
+                            android:textSize="15sp"
+                            android:textColor="#050000"
+                            android:textStyle="bold"
+                            android:text="Register Complaint" />
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/comsts"
+                            android:checked="false"
+                            android:textSize="15dp"
+                            android:textStyle="bold"
+                            android:text="View status" />
+                    </RadioGroup>
+                </LinearLayout>
+
+
+        </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/consid1">
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/userid"
+            android:id="@+id/consID" />
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@drawable/star"
+            android:layout_marginTop="20dp"
+            android:id="@+id/star1"/>
+        <Spinner
+            android:id="@+id/spinner2"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:textSize="16sp"
+            android:background="@drawable/spin_spinner_comlain"
+            android:layout_centerVertical="true" />
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/consIDval"
+            android:textSize="17dp"
+            android:textStyle="bold"
+            android:maxLength="12"
+            android:hint="12 digit consumer ID"
+            android:inputType="textCapCharacters" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:text="Hint"
+            android:id="@+id/hint"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="15dp" />
+    </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tblrw2">
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/phone"
+            android:id="@+id/Mobno" />
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@drawable/star"
+            android:layout_marginTop="20dp"
+            android:id="@+id/star2" />
+
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:ems="10"
+            android:id="@+id/mobval"
+            android:layout_weight="1"
+            android:hint="Mobile Number"
+            android:maxLength="10" />
+    </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tblrw3">
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/email"
+            android:id="@+id/email" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/emailval"
+            android:layout_weight="1"
+            android:hint="e-Mail ID"
+            android:maxLength="50" />
+    </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/tblrw4"
+            android:layout_gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/conNm"
+                android:layout_gravity="center_horizontal"
+                android:hint="Enter Name"
+                android:textStyle="bold"
+                android:textSize="14dp"
+                android:textColor="#050000" />
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/customborder1"
+            android:id="@+id/tbl1">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:id="@+id/Addr"
+                android:layout_gravity="center_horizontal"
+                android:hint="Enter Address" />
+        </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:id="@+id/tblrw5">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="SMS Communication shall be sent to this number"
+            android:id="@+id/mobmsg"
+            android:textColor="#030000"
+            android:textSize="12dp"
+            android:layout_weight="0.18" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/tblrw6">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Agree Terms &amp; Conditions"
+            android:id="@+id/tmcnd"
+            android:checked="true" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Know More"
+            android:id="@+id/bttrmscnd"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="20dp" />
+    </TableRow>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20sp">
+
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="35dp"
+            android:text="Submit"
+            android:id="@+id/submit"
+            android:background="@drawable/butn" />
+    </LinearLayout>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:progressDrawable="@drawable/circular_progress_bar"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="150dp" />
+
+</LinearLayout>-->
+

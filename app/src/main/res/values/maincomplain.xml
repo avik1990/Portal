@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="complain_prompt">Choose a Complaint</string>
+    <string-array name="complain_arrays">
+        <item>Select Complaint</item>
+        <item>Bill Related</item>
+        <item>Meter Related</item>
+        <item>Power Supply Related</item>
+    </string-array>
+
+</resources>

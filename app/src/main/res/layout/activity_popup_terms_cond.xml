@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cvPaymentDetails"
+        app:cardCornerRadius="8dp"
+        app:cardBackgroundColor="@color/White"
+        app:cardElevation="5dp">
+
+    <LinearLayout
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="400dp"
+    android:gravity="center"
+        android:padding="50px"
+        android:weightSum="1">
+        <Button
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/closePopupBtn"
+            android:layout_gravity="right"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:background="@drawable/cross"
+            android:layout_alignParentEnd="true"
+            android:textColor="#000000" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14dp"
+            >
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="@string/terms_and_conditions"
+                android:textColor="@color/black"
+                android:id="@+id/tvTempTnc"
+                android:textSize="16dp"
+                android:layout_centerHorizontal="true"
+                ></TextView>
+
+        </RelativeLayout>
+    <TextView
+        android:layout_width="300dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:text="@string/termsAndConditions"
+        android:textColor="@color/black"
+        android:id="@+id/tvTnC"
+        android:scrollbars="vertical"
+        android:textSize="14dp" />
+
+
+
+</LinearLayout>
+    </androidx.cardview.widget.CardView>
+</ScrollView>

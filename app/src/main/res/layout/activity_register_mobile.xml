@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="260dp"
+    android:color="@color/bordercolor1"
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/customborder"
+    android:id="@+id/layout"
+    android:layout_marginTop="40dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center_vertical">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="vertical"
+        android:id="@+id/consid1">
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/userid"
+            android:id="@+id/consID" />
+        <ImageView
+            android:layout_width="7dp"
+            android:layout_height="7dp"
+            android:background="@drawable/star"
+            android:layout_marginTop="20dp"
+            android:id="@+id/star1"/>
+
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/consIDval"
+            android:textSize="17dp"
+            android:textStyle="bold"
+            android:maxLength="12"
+            android:hint="12 digit consumer ID" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:text="Hint"
+            android:id="@+id/hint"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="15dp" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/email"
+            android:id="@+id/email" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/emailval"
+            android:layout_weight="1"
+            android:hint="e-Mail ID" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/phone"
+            android:id="@+id/Mobno" />
+        <ImageView
+            android:layout_width="7dp"
+            android:layout_height="7dp"
+            android:background="@drawable/star"
+            android:layout_marginTop="20dp" />
+
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:ems="10"
+            android:id="@+id/mobval"
+            android:layout_weight="1"
+            android:hint="Mobile Number"
+            android:maxLength="10" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="All the SMS will sent to this number"
+            android:id="@+id/mobmsg"
+            android:textColor="#030000"
+            android:textSize="12dp"
+            android:layout_weight="0.18" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="35dp">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Agree Terms &amp; Conditions"
+            android:id="@+id/tmcnd"
+            android:checked="true" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:text="Know More"
+            android:id="@+id/bttrmscnd"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="20dp" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="35dp"
+            android:text="back"
+            android:id="@+id/back"
+            android:background="@drawable/butn"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="5dp" />
+
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="35dp"
+            android:text="Submit"
+            android:id="@+id/submit"
+            android:background="@drawable/butn" />
+    </TableRow>
+
+</LinearLayout>
+
+
+

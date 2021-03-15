@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_current_bill"
+    tools:context="com.cesu.itcc05.consumeportal.CurrentBillActivity">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:id="@+id/linearLayout3"
+        android:gravity="center">
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/CompNo">
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/userid"
+                android:id="@+id/consID" />
+            <ImageView
+                android:layout_width="7dp"
+                android:layout_height="7dp"
+                android:background="@drawable/star"
+                android:layout_marginTop="20dp"
+                android:id="@+id/star1"/>
+            <Spinner
+                android:id="@+id/spinner2"
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:textSize="16sp"
+                android:background="@drawable/spin_spinner_comlain"
+                android:layout_centerVertical="true" />
+
+        </TableRow>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentEnd="false"
+        android:id="@+id/linearLayout"
+        android:layout_marginTop="50sp"
+        android:gravity="center_horizontal"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/conName"
+            android:textSize="16sp"
+            android:textColor="#090000"
+            android:textStyle="bold"
+            android:gravity="center_horizontal" />
+
+
+    </LinearLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignParentEnd="false"
+        android:id="@+id/tableLayout"
+        android:background="@drawable/customborder">
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#d8fcf6">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/payment_due"
+                android:background="@drawable/customborder1"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#790404" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/btot"
+                android:background="@drawable/customborder1"
+                android:textSize="16sp"
+                android:layout_weight="2"
+                android:textColor="#790404"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#f2f7f5">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/current_bill"
+                android:id="@+id/textView8"
+                android:background="@drawable/customborder1"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/cbill"
+                android:background="@drawable/customborder1"
+                android:textSize="16sp"
+                android:layout_weight="2"
+                android:textColor="#080000" />
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#d8fcf6">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/arrear"
+                android:background="@drawable/customborder1"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/arrear"
+                android:background="@drawable/customborder1"
+                android:textSize="16sp"
+                android:layout_weight="2"
+                android:textColor="#080000" />
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/bill_date_bill"
+                android:background="@drawable/customborder1"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/customborder1"
+                android:textSize="16sp"
+                android:layout_weight="2"
+                android:id="@+id/bdate"
+                android:textColor="#070000" />
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#d8fcf6">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/due_date"
+                android:id="@+id/textView9"
+                android:background="@drawable/customborder1"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/dudt"
+                android:background="@drawable/customborder1"
+                android:textSize="16sp"
+                android:layout_weight="2" />
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/rebate"
+                android:id="@+id/rbt"
+                android:background="@drawable/customborder1"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/rbt1"
+                android:background="@drawable/customborder1"
+                android:textSize="16sp"
+                android:layout_weight="2" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#d8fcf6">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/pmt_recvd"
+                android:id="@+id/textView10"
+                android:background="@drawable/customborder1"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/pmt"
+                android:background="@drawable/customborder1"
+                android:textSize="16sp"
+                android:layout_weight="2" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#f2f7f5">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/last_pmt_recvd"
+                android:id="@+id/textView11"
+                android:background="@drawable/customborder1"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/pmtdt"
+                android:background="@drawable/customborder1"
+                android:textSize="16sp"
+                android:layout_weight="2" />
+        </TableRow>
+    </TableLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tableLayout"
+        android:layout_marginTop="10dp"
+        android:id="@+id/linearLayout4"
+        android:gravity="center_horizontal"
+        android:layout_centerHorizontal="true">
+
+        <Button
+            android:layout_width="160dp"
+            android:layout_height="35dp"
+            android:text="@string/view_bill_history"
+            android:id="@+id/viewHis"
+            android:layout_below="@+id/tableLayout"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/butn"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginRight="10sp" />
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="35dp"
+            android:text="@string/pay_now"
+            android:id="@+id/paynow"
+            android:layout_below="@+id/tableLayout"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/butn"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="5sp" />
+    </LinearLayout>
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:progressDrawable="@drawable/circular_progress_bar"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="-300dp" />
+</RelativeLayout>

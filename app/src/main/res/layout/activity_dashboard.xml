@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="3"
+    android:layout_gravity="center"
+    android:orientation="vertical" >
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/customborder2"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_weight="0.45"
+        android:orientation="horizontal"
+        android:weightSum="2" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/view_bill"
+                android:textSize="15dp"
+                android:textColor="#000000" />
+
+            <ImageButton
+                android:id="@+id/cbill"
+                android:layout_width="65dp"
+                android:layout_height="60dp"
+                android:layout_weight="0.5"
+                android:background="@drawable/curbill" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pay_now"
+                android:textSize="15dp"
+                android:textColor="#000000" />
+
+            <ImageButton
+                android:id="@+id/pmt"
+                android:layout_width="65dp"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:layout_weight="0.5"
+                android:background="@drawable/payment" />
+        </LinearLayout>
+
+    </LinearLayout>
+        <View style="@style/Divider"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_weight="0.45"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="2" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@+id/linearLayout1"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|center"
+                android:text="@string/profile"
+                android:textSize="15dp"
+                android:textColor="#000000" />
+
+            <ImageButton
+                android:id="@+id/profile"
+                android:layout_width="65dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:background="@drawable/profile" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|center"
+                android:text="@string/complaint_amp_suggestions"
+                android:textSize="15dp"
+                android:textColor="#000000" />
+            <ImageButton
+                android:id="@+id/complt"
+                android:layout_width="65dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:background="@drawable/complain" />
+
+        </LinearLayout>
+    </LinearLayout>
+        <View style="@style/Divider"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="0.45"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="2" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignTop="@+id/linearLayout1"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|center"
+                    android:text="@string/outage"
+                    android:textSize="15dp"
+                    android:textColor="#000000" />
+                <ImageButton
+                    android:id="@+id/outage"
+                    android:layout_width="65dp"
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:background="@drawable/outage" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/dd_emplyoee"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_emp_ver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical|center"
+                        android:text="@string/employee_verification"
+                        android:textSize="12sp"
+                        android:textColor="#010101">
+
+                    </TextView>
+                    <ImageButton
+                        android:id="@+id/onlindsepay"
+                        android:layout_width="60sp"
+                        android:layout_height="60sp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/images" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <View style="@style/Divider"/>
+        <LinearLayout
+            android:id="@+id/ll_safetyy"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="0.45"
+            android:orientation="horizontal"
+            android:weightSum="2" >
+
+            <LinearLayout
+                android:id="@+id/ll_safety"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignTop="@+id/linearLayout1"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|center"
+                    android:text="@string/safety"
+                    android:textSize="15dp"
+                    android:textColor="#000000" />
+                <ImageButton
+                    android:id="@+id/iv_safety"
+                    android:layout_width="65dp"
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:background="@drawable/safety" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_feedback"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/feedback"
+                    />
+                <ImageView
+                    android:id="@+id/iv_feedback"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/feedback"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ddwqe"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:visibility="gone"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_emp_vewqer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical|center"
+                        android:text="@string/employee_verification"
+                        android:textSize="12sp"
+                        android:textColor="#010101">
+
+                    </TextView>
+                    <ImageButton
+                        android:id="@+id/onlindsewepay"
+                        android:layout_width="60sp"
+                        android:layout_height="60sp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/images" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:progressDrawable="@drawable/circular_progress_bar"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="-300dp" />
+</LinearLayout>

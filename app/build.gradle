@@ -1,0 +1,64 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
+
+
+    defaultConfig {
+        applicationId "com.cesu.itcc05.consumeportal"
+        minSdkVersion 19
+        targetSdkVersion 30
+        versionCode 7
+        versionName "1.5"
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    flavorDimensions "versionCode"
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // testCompile 'junit:junit:4.12'
+    implementation files('libs/sqliteassethelper-2.0.1.jar')
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'com.google.code.ksoap2-android:ksoap2-android:3.1.1'
+    implementation 'com.github.dhaval2404:imagepicker:1.7.4'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.github.smarteist:autoimageslider:1.4.0-appcompat'
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    implementation 'androidx.navigation:navigation-fragment:2.1.0'
+    implementation 'androidx.navigation:navigation-ui:2.1.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.github.delight-im:Android-AdvancedWebView:v3.2.1'
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.17'
+
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion"
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+
+    // flex layout
+    implementation 'com.google.android:flexbox:0.3.1'
+
+    //image loader libs
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+    implementation "com.airbnb.android:lottie:3.6.0"
+
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2b63ae</color>
+
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="bottomBarDefaultTextColor">#FFFFFF</color>
+    <color name="bordercolor1">#A41B03</color>
+    - <!--  Scanner   -->
+    <color name="scanactionbar_opacity">#33000000</color>
+    <color name="scanviewfinder_laser">#ffcc0000</color>
+
+    <color name="scanviewfinder_mask">#60000000</color>
+    <color name="scanviewfinder_border">#ffafed44</color>
+    <color name="colorVerify">#54C571</color>
+    <color name="Wheat">#F5DEB3</color>
+    <color name="White">#FFFFFF</color>
+    <color name="black">#000000</color>
+</resources>

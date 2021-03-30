@@ -39,6 +39,7 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
+
 import android.graphics.Rect;
 import android.graphics.Typeface;
 
@@ -51,28 +52,33 @@ import com.google.gson.reflect.TypeToken;
 import static android.os.FileUtils.closeQuietly;
 
 public class CommonMethods {
-    public static String getUniqueNumber(String mobileNumber){
+    public static String getUniqueNumber(String mobileNumber) {
         //return mobileNumber+"1111";
         return "102030405060708";
     }
 
-    public static void loadPaymentPage(Activity activity, String custId, String mobileNum){
+    public static void loadPaymentPage(Activity activity, String custId, String mobileNum) {
+        if (mobileNum == null) {
+            mobileNum = "";
+        }
+
         Intent intent = new Intent(activity, PaymentResponsiveActivity.class);
-        String testUrl = getPaymentUrl(custId,mobileNum, activity.getApplicationContext());
-        intent.putExtra("paymentUrl",testUrl);
+        String testUrl = getPaymentUrl(custId, mobileNum, activity.getApplicationContext());
+        intent.putExtra("paymentUrl", testUrl);
         activity.startActivity(intent);
     }
-    public static String getAppVersion(){
+
+    public static String getAppVersion() {
         String version = BuildConfig.VERSION_NAME;
         return version;
     }
 
-    public static String getPaymentUrl(String custId, String mobileNum, Context context){
+    public static String getPaymentUrl(String custId, String mobileNum, Context context) {
         String url = null;
         try {
-            url = getIp(context)+"ConsumerPortal/GetData?intOptionType=2&ConsumerID="+
-                    getEncryptedString(Constants.secretKey,custId)+"&strMobileNo="+
-                    getEncryptedString(Constants.secretKey,mobileNum)+"&isEncrypt=true";
+            url = getIp(context) + "ConsumerPortal/GetData?intOptionType=2&ConsumerID=" +
+                    getEncryptedString(Constants.secretKey, custId) + "&strMobileNo=" +
+                    getEncryptedString(Constants.secretKey, mobileNum) + "&isEncrypt=true";
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (NoSuchPaddingException e) {
@@ -86,12 +92,13 @@ public class CommonMethods {
         }
         return url;
     }
-    /*http://portal1.tpcentralodisha.com:8080/*/
-    public static String getIp(Context context){
-        SharedPreferences sessionlinkurl = context.getSharedPreferences("seslinkval", 0);
-        String strurlval =sessionlinkurl.getString("strurladdr", null); // getting String
 
-        return "http://portal.tpcentralodisha.com:8070"+"/";
+    /*http://portal1.tpcentralodisha.com:8080/*/
+    public static String getIp(Context context) {
+        SharedPreferences sessionlinkurl = context.getSharedPreferences("seslinkval", 0);
+        String strurlval = sessionlinkurl.getString("strurladdr", null); // getting String
+
+        return "http://portal.tpcentralodisha.com:8070" + "/";
 
         /*String normal = "http://portal.tpcentralodisha.com:8070/";
         String disaster = "http://portal1.tpcentralodisha.com:8070/";
@@ -118,7 +125,7 @@ public class CommonMethods {
 
     }
 
-    public static String encryptedText="";
+    public static String encryptedText = "";
 
 
     public static String getEncryptedString(String key1, String stringToEncrypt)
@@ -161,22 +168,25 @@ public class CommonMethods {
         return decryptedValue;
 
     }
+
     //private static byte[] keyValue = new byte[]{ 'W', 'e', 'l', 'c', 'o', 'm', 'e','t', 'o', 'e', 'n','c', 'r', 'y', 'p', 't' };
     private static Key generateKey(String secret) throws Exception {
         Key key = new SecretKeySpec(secret.getBytes(), "AES");
         return key;
     }
+
     //The first digit should contain number between 6 to 9.
     //The rest 9 digit can contain any number between 0 to 9.
-    public static boolean  isValidMobile(String phoneNo) {
+    public static boolean isValidMobile(String phoneNo) {
         Pattern p = Pattern.compile("[6-9][0-9]{9}");
         Matcher m = p.matcher(phoneNo);
         return (m.find() && m.group().equals(phoneNo));
     }
 
-    public static String getAppLink(Context context){
-        return "https://play.google.com/store/apps/details?id="+context.getPackageName();
+    public static String getAppLink(Context context) {
+        return "https://play.google.com/store/apps/details?id=" + context.getPackageName();
     }
+
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         //Find the currently focused view, so we can grab the correct window token from it.
@@ -187,6 +197,7 @@ public class CommonMethods {
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
+
     @SuppressLint("NewApi")
     public static String readFileAsBase64String(String path) {
         try {
@@ -214,9 +225,9 @@ public class CommonMethods {
             return "";
         }
     }
+
     public static boolean isNetworkAvailable(Context mContext) {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager)mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
@@ -244,24 +255,23 @@ public class CommonMethods {
         }
         return callLog;
     }
-    public static boolean checkGPS(Context mContext){
-        boolean gpsEnable=false;
-        final LocationManager manager = (LocationManager)mContext.getSystemService( Context.LOCATION_SERVICE );
 
-        if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
-           // buildAlertMessageNoGps(mContext);
-            gpsEnable=false;
-        }
-        else {
-            gpsEnable=true;
+    public static boolean checkGPS(Context mContext) {
+        boolean gpsEnable = false;
+        final LocationManager manager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            // buildAlertMessageNoGps(mContext);
+            gpsEnable = false;
+        } else {
+            gpsEnable = true;
         }
 
-       return  gpsEnable;
+        return gpsEnable;
     }
 
-    public static boolean isValidEmail(String email)
-    {
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+    public static boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
                 "[a-zA-Z0-9_+&*-]+)*@" +
                 "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
                 "A-Z]{2,7}$";
@@ -272,23 +282,36 @@ public class CommonMethods {
         return pat.matcher(email).matches();
     }
 
-    public static String getRemoteVersionNumber(Context context)
-    {
+    public static String getRemoteVersionNumber(Context context) {
         int versionCode = 0;
-        String version="";
+        String version = "";
         try {
             PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-             version = pInfo.versionName;
+            version = pInfo.versionName;
             versionCode = pInfo.versionCode;
-        }
-        catch (PackageManager.NameNotFoundException e) {
+        } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
         return version;
     }
 
 
+    public static void saveSelectedPosition(Context context, String position) {
+        SharedPreferences mPrefs = context.getSharedPreferences("MyPreference", context.MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        //Gson gson = new Gson();
+        // String json = gson.toJson(callLog);
+        prefsEditor.putString("ca_position", position);
+        prefsEditor.apply();
+    }
 
+    public static String getSelectedPosition(Context context) {
+        String callLog = "";
+        SharedPreferences mPrefs = context.getSharedPreferences("MyPreference", context.MODE_PRIVATE);
+        // Gson gson = new Gson();
+        callLog = mPrefs.getString("ca_position", "");
+        return callLog;
+    }
 
 
 }

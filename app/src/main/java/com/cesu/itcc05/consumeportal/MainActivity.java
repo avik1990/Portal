@@ -33,6 +33,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -102,32 +103,16 @@ import static java.lang.System.exit;
 import static java.lang.System.in;
 
 public class MainActivity extends Activity implements
-        AdapterView.OnItemSelectedListener {
-    private static ImageView strconsID;
-    private static Button strhint, btnsubmit;
-    private static ImageView stremail;
-    private static ImageView strMobno;
-    private static ImageView strstar1;
-    private static TextView strmobmsg, strSwVersion;
-    private static EditText strconsIDval;
-    private static EditText stremailval;
-    private static EditText strmobval;
-    private String consIDval = "";
-    private String emailval = "";
+        AdapterView.OnItemSelectedListener, View.OnTouchListener {
     private String mobval = "";
     private String imeinum = "";
-    public static final int RequestPermissionCode = 1;
-    public static final int WRITE_REQUEST_CODE = 1;
-    private String strpwd = "";
-    private String strrepwd = "";
     final Context context = this;
-    private int chkresponse = 1;
     private String AuthURL = null;
-    Button showPopupBtn, closePopupBtn;
-    TextView  UpdateSwBtn;
+    Button closePopupBtn;
+    TextView UpdateSwBtn;
     PopupWindow popupWindow;
     LinearLayout linearLayout1;
-    ConstraintLayout layout;
+    FrameLayout layout;
     private DatabaseAccess databaseAccess = null;
     private CheckBox TermCond;
     private String versionID = "";
@@ -178,6 +163,10 @@ public class MainActivity extends Activity implements
     List<OfferSchemModal> offerSchemModals = new ArrayList<OfferSchemModal>();
     private CardView cardview_offer, payment_cen, cardview_about_us;
     private boolean isSync = false;
+    float dX;
+    float dY;
+    int lastAction;
+    FrameLayout frame_layout;
 
     private static final String[] REQUIRED_SDK_PERMISSIONS = new String[]{
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -201,15 +190,17 @@ public class MainActivity extends Activity implements
     private String currentDate = "";
     private String currentTimeHour = "";
     GifImageView gif_image;
-    private boolean called=false;
-    private int count=0;
+    private boolean called = false;
+    private int count = 0;
     private FrameLayout frame_number;
     private TextView tv_number;
-    private String mobileNumberPay="";
-    private String CANumberPay="";
-    private String emailPay="";
+    private String mobileNumberPay = "";
+    private String CANumberPay = "";
+    private String emailPay = "";
     private TextView tv_my_Account;
-    String version="";
+    String version = "";
+    ImageView iv_ca_drop;
+    View dragView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -217,6 +208,10 @@ public class MainActivity extends Activity implements
         loadLocale();
         setContentView(R.layout.activity_main);
 
+        dragView = findViewById(R.id.fab);
+        dragView.setOnTouchListener(this);
+        frame_layout = findViewById(R.id.frame_layout);
+        iv_ca_drop = findViewById(R.id.iv_ca_drop);
         cardview_outage = findViewById(R.id.cardview_outage);
         //  card_payment=findViewById(R.id.card_payment);
         card_my_account = findViewById(R.id.card_my_account);
@@ -240,16 +235,16 @@ public class MainActivity extends Activity implements
         iv_image = findViewById(R.id.iv_image);
         language = findViewById(R.id.language);
         tv_name = findViewById(R.id.tv_name);
-        frame_number=findViewById(R.id.frame_number);
-        tv_number=findViewById(R.id.tv_number);
-        tv_my_Account=findViewById(R.id.tv_my_Account);
-        layout=findViewById(R.id.layout);
-        tv_my_Account.setText(MainActivity.this.getString(R.string.register));
+        frame_number = findViewById(R.id.frame_number);
+        tv_number = findViewById(R.id.tv_number);
+        tv_my_Account = findViewById(R.id.tv_my_Account);
+        layout = findViewById(R.id.layout);
 
+        //Toast.makeText(context, "Select Position" + CommonMethods.getSelectedPosition(context), Toast.LENGTH_SHORT).show();
 
 
         cardview_document = findViewById(R.id.cardview_document);
-        gif_image=findViewById(R.id.gif_image);
+        gif_image = findViewById(R.id.gif_image);
         gif_image.setVisibility(View.GONE);
         frame_number.setVisibility(View.GONE);
         databaseAccess = DatabaseAccess.getInstance(context);
@@ -278,6 +273,7 @@ public class MainActivity extends Activity implements
 
 
         iv_image.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 final String[] listItem = {"English", "हिन्दी", "ଓଡିଆ"};
@@ -286,7 +282,6 @@ public class MainActivity extends Activity implements
                 mBuilder.setSingleChoiceItems(listItem, -1, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
-
                         if (i == 0) {
                             setLocale("en");
                             language.setText("ENG");
@@ -302,19 +297,15 @@ public class MainActivity extends Activity implements
                         }
                         dialog.dismiss();
                     }
-
-
                 });
                 AlertDialog mDialog = mBuilder.create();
                 mDialog.show();
 
             }
-
-
         });
 
 
-        LinearLayout fab = findViewById(R.id.fab);
+        // LinearLayout fab = findViewById(R.id.fab);
         permissionStatus = getSharedPreferences("permissionStatus", MODE_PRIVATE);
 
         checkPermissions();
@@ -333,25 +324,12 @@ public class MainActivity extends Activity implements
         }
 
 
-
-
-        fab.setOnClickListener(new View.OnClickListener() {
+        /*frame_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-               insertHit("Chat");
-                /*if (conIds.size() > 0) {
-                    Intent i = new Intent(context, ChatActivity.class);
-                    i.putExtra("CA", conIds);
-                    i.putExtra("CONSUMER_NO", conid);
-                    i.putExtra("MOBILE_NO", mobno);
-                    i.putExtra("CONSUMER_NAME", conName);
-                    i.putExtra("SCHEMES_ARRAY", new Gson().toJson(listSchemes));
-                    startActivity(i);
-                }
-                else {
-                    Toast.makeText(MainActivity.this,"Please login first to initiate chat",Toast.LENGTH_SHORT).show();
-                }*/
+                insertHit("Chat");
+
                 Intent i = new Intent(context, ChatActivity.class);
                 i.putExtra("CA", conIds);
                 i.putExtra("CONSUMER_NO", conid);
@@ -360,11 +338,7 @@ public class MainActivity extends Activity implements
                 i.putExtra("SCHEMES_ARRAY", new Gson().toJson(listSchemes));
                 startActivity(i);
             }
-        });
-
-
-
-
+        });*/
 
 
         databaseAccess.open();
@@ -392,12 +366,32 @@ public class MainActivity extends Activity implements
         databaseAccess.close();
 
 
-
         ArrayAdapter aa = new ArrayAdapter(this, R.layout.spinner_item, conIds);
         aa.setDropDownViewResource(R.layout.spinner_item);
         //Setting the ArrayAdapter data on the Spinner
         spinner_ca.setAdapter(aa);
         spinner_ca.setOnItemSelectedListener(this);
+
+        if (conIds.size() > 0) {
+            if (!CommonMethods.getSelectedPosition(context).isEmpty()) {
+                spinner_ca.setSelection(Integer.parseInt(CommonMethods.getSelectedPosition(context)));
+            }
+        }
+
+        // if (conIds.size() > 0) {
+        try {
+            iv_ca_drop.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //if(spinner_ca.getSelectedItem() == null) { // user selected nothing...
+                    spinner_ca.performClick();
+                    // }
+                }
+            });
+        } catch (Exception e) {
+
+        }
+        //  }
 
 
         if (!conid.equals("x")) {
@@ -412,18 +406,13 @@ public class MainActivity extends Activity implements
         }
 
 
-
-
-
-
-
         btn_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent QDashboard = new Intent(getApplicationContext(), InstantPaymentActivity.class);
-                QDashboard.putExtra("ca","");
-                QDashboard.putExtra("mob","");
-                QDashboard.putExtra("email","");
+                QDashboard.putExtra("ca", "");
+                QDashboard.putExtra("mob", "");
+                QDashboard.putExtra("email", "");
 
                 startActivity(QDashboard);
 
@@ -431,15 +420,20 @@ public class MainActivity extends Activity implements
             }
         });
         cl_pay_amount.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
 
+                if (mobileNumberPay == null) {
+                    mobileNumberPay = "";
+                }
 
-                CommonMethods.loadPaymentPage(MainActivity.this,
-                        CANumberPay,
-                        mobileNumberPay);
-                insertHit("Pay");
+                CommonMethods.loadPaymentPage(MainActivity.this, CANumberPay, mobileNumberPay);
+                try {
+                    insertHit("Pay");
+                } catch (Exception e) {
 
+                }
              /*   Intent QDashboard = new Intent(getApplicationContext(), InstantPaymentActivity.class);
                 QDashboard.putExtra("ca",CANumberPay);
                 QDashboard.putExtra("mob",mobileNumberPay);
@@ -567,9 +561,6 @@ public class MainActivity extends Activity implements
         });
 
 
-
-
-
     }
 
     private void fetchInformation() {
@@ -616,10 +607,12 @@ public class MainActivity extends Activity implements
     @Override
     public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
         // Toast.makeText(getApplicationContext(),country[position] , Toast.LENGTH_LONG).show();
-
+        CommonMethods.saveSelectedPosition(context, "" + position);
         spinnerId = conIds.get(position);
 
-        CANumberPay=conIds.get(position);
+        //position
+
+        CANumberPay = conIds.get(position);
         if (!conid.equals("x")) {
 
             if (CommonMethods.isNetworkAvailable(MainActivity.this)) {
@@ -635,6 +628,43 @@ public class MainActivity extends Activity implements
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        switch (event.getActionMasked()) {
+            case MotionEvent.ACTION_DOWN:
+                dX = dragView.getX() - event.getRawX();
+                dY = dragView.getY() - event.getRawY();
+                lastAction = MotionEvent.ACTION_DOWN;
+                break;
+
+            case MotionEvent.ACTION_MOVE:
+                dragView.setY(event.getRawY() + dY);
+                dragView.setX(event.getRawX() + dX);
+                lastAction = MotionEvent.ACTION_MOVE;
+                break;
+
+            case MotionEvent.ACTION_UP:
+                if (lastAction == MotionEvent.ACTION_DOWN) {
+                    try {
+                        insertHit("Chat");
+                    } catch (Exception e) {
+                    }
+                    Intent i = new Intent(context, ChatActivity.class);
+                    i.putExtra("CA", conIds);
+                    i.putExtra("CONSUMER_NO", conid);
+                    i.putExtra("MOBILE_NO", mobno);
+                    i.putExtra("CONSUMER_NAME", conName);
+                    i.putExtra("SCHEMES_ARRAY", new Gson().toJson(listSchemes));
+                    startActivity(i);
+                }
+                break;
+
+            default:
+                return false;
+        }
+        return true;
     }
 
     private class UserAuthOnline extends AsyncTask<String, Integer, String> {
@@ -930,11 +960,10 @@ public class MainActivity extends Activity implements
     private void fetchBanner() {
         String url = "http://122.185.188.231/TPCODLCONNECTSERVICE/TPCODLConnectService.asmx/GetBannerDetail?checksum=01091981";
 
-        if (!called){
+        if (!called) {
             new fetchBannerData().execute(url);
         }
-        called=true;
-
+        called = true;
 
 
         System.out.println("called===");
@@ -1099,10 +1128,10 @@ public class MainActivity extends Activity implements
                 Document doc = db.parse(new InputSource(url.openStream()));
                 doc.getDocumentElement().normalize();
 
-                version=doc.getFirstChild().getTextContent();
-                System.out.println("sdfgt=="+version);
+                version = doc.getFirstChild().getTextContent();
+                System.out.println("sdfgt==" + version);
 
-              //  isSync = Boolean.parseBoolean(doc.getFirstChild().getTextContent());
+                //  isSync = Boolean.parseBoolean(doc.getFirstChild().getTextContent());
 
                 //  String[] res = doc.getFirstChild().getTextContent().split("[#]", 0);
 
@@ -1121,7 +1150,7 @@ public class MainActivity extends Activity implements
             ConnectivityManager cm = (ConnectivityManager) MainActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
             if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
-              //  progressDialog = ProgressDialog.show(MainActivity.this, "Fetching Data", "Please Wait:: connecting to server");
+                //  progressDialog = ProgressDialog.show(MainActivity.this, "Fetching Data", "Please Wait:: connecting to server");
 
             } else {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
@@ -1148,13 +1177,13 @@ public class MainActivity extends Activity implements
         @Override
         protected void onPostExecute(String str) {
             Log.d("DemoApp", " str   " + str);
-         //   progressDialog.dismiss();
+            //   progressDialog.dismiss();
 
-            if ((version!=null)||(version.equalsIgnoreCase(""))){
+            if ((version != null) || (version.equalsIgnoreCase(""))) {
 
-                if (!(CommonMethods.getRemoteVersionNumber(MainActivity.this).equalsIgnoreCase(version))){
+                if (!(CommonMethods.getRemoteVersionNumber(MainActivity.this).equalsIgnoreCase(version))) {
                     LayoutInflater layoutInflater = (LayoutInflater) MainActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    View customView = layoutInflater.inflate(R.layout.activity_popup,null);
+                    View customView = layoutInflater.inflate(R.layout.activity_popup, null);
                     closePopupBtn = (Button) customView.findViewById(R.id.closePopupBtn);
                     UpdateSwBtn = (TextView) customView.findViewById(R.id.UpdateSwBtn);
                     //instantiate popup window
@@ -1194,11 +1223,9 @@ public class MainActivity extends Activity implements
         images.clear();
         GlobalVariable.offerSchemModals.clear();
 
-        if (bannerModals.size()==0){
+        if (bannerModals.size() == 0) {
             bannerModals.addAll(CommonMethods.loadSharedPreferencesLogList(MainActivity.this));
-        }
-
-       else if((bannerModals.size()==1)&&(bannerModals.get(0).getBannerType().equalsIgnoreCase("SCHEME"))){
+        } else if ((bannerModals.size() == 1) && (bannerModals.get(0).getBannerType().equalsIgnoreCase("SCHEME"))) {
             bannerModals.clear();
             bannerModals.addAll(CommonMethods.loadSharedPreferencesLogList(MainActivity.this));
 
@@ -1212,10 +1239,10 @@ public class MainActivity extends Activity implements
                 sliderItem.setDescription(bannerModals.get(i).getImageName());
                 images.add(sliderItem);
 
-                CommonMethods.saveSharedPreferencesLogList(MainActivity.this,bannerModals);
+                CommonMethods.saveSharedPreferencesLogList(MainActivity.this, bannerModals);
             } else {
-                count=count+1;
-                tv_number.setText(""+count);
+                count = count + 1;
+                tv_number.setText("" + count);
                 OfferSchemModal offerSchemModal = new OfferSchemModal();
                 offerSchemModal.setId(bannerModals.get(i).getId());
                 offerSchemModal.setImageName(bannerModals.get(i).getImageName());
@@ -1344,32 +1371,30 @@ public class MainActivity extends Activity implements
     protected void onResume() {
         super.onResume();
         //loadLocale();
-     //  checkSync();  // version control
+        //  checkSync();  // version control
 
         getLoginUser();
 
     }
 
     private void getLoginUser() {
-        String ownerAccount="";
+        String ownerAccount = "";
         databaseAccess.open();
         strSelectSQL_01 = null;
         cursor = null;
         strSelectSQL_01 = "SELECT CONSUMER_ID,MOBILENO,CONSUMER_NAME " +
-                "FROM CONSUMERDTLS WHERE VALIDATE_FLG=1";
+                "FROM CONSUMERDTLS WHERE VALIDATE_FLG='1'";
         cursor = DatabaseAccess.database.rawQuery(strSelectSQL_01, null);
         Log.d("DemoApp", "Query SQL " + strSelectSQL_01);
         conIds.clear();
         while (cursor.moveToNext()) {
             ownerAccount = cursor.getString(0);
-
-
             Log.d("DemoApp", "owner" + ownerAccount);
         }
         cursor.close();
         databaseAccess.close();
 
-        if ((ownerAccount!=null)||(!(ownerAccount.equalsIgnoreCase("")))){
+        if ((ownerAccount != null) || (!(ownerAccount.equalsIgnoreCase("")))) {
             getData();
         }
 
@@ -1493,7 +1518,7 @@ public class MainActivity extends Activity implements
                     databaseAccess.open();
                     strSelectSQL_01 = null;
 
-                    DatabaseAccess.database.execSQL("DELETE FROM " + "STATISTICS_DATA" + " WHERE " + "TILES_NAME" + "= '" + insertTiles + "'" +" AND"+ " CLICK_DATE"+"='"+insertDate+"'" +" AND"+  " CLICK_TIME"+"= '"+insertTime+"'");
+                    DatabaseAccess.database.execSQL("DELETE FROM " + "STATISTICS_DATA" + " WHERE " + "TILES_NAME" + "= '" + insertTiles + "'" + " AND" + " CLICK_DATE" + "='" + insertDate + "'" + " AND" + " CLICK_TIME" + "= '" + insertTime + "'");
 
 
                  /*   strSelectSQL_01 =
@@ -1532,37 +1557,56 @@ public class MainActivity extends Activity implements
         }
 
     }
-    public void getData(){
 
-        String ownerAccount="";
+    public void getData() {
+        String ownerAccount = "";
         databaseAccess.open();
         strSelectSQL_01 = null;
         cursor = null;
-        strSelectSQL_01 = "SELECT CONSUMER_ID,MOBILENO,CONSUMER_NAME " +
-                "FROM CONSUMERDTLS WHERE VALIDATE_FLG=1 OR VALIDATE_FLG=9";
+
+        strSelectSQL_01 = "SELECT CONSUMER_ID,MOBILENO,CONSUMER_NAME " + "FROM CONSUMERDTLS WHERE VALIDATE_FLG=1 OR VALIDATE_FLG=9";
         cursor = DatabaseAccess.database.rawQuery(strSelectSQL_01, null);
         Log.d("DemoApp", "Query SQL " + strSelectSQL_01);
         conIds.clear();
+
         while (cursor.moveToNext()) {
             conid = cursor.getString(0);
             conIds.add(conid);
             mobno = cursor.getString(1);
             conName = cursor.getString(2);
-            mobileNumberPay=mobno;
-
+            mobileNumberPay = mobno;
             Log.d("DemoApp", "in Loop conid" + conid);
         }
+
         cursor.close();
         databaseAccess.close();
-
-
-
 
         ArrayAdapter aa = new ArrayAdapter(this, R.layout.spinner_item, conIds);
         aa.setDropDownViewResource(R.layout.spinner_item);
         //Setting the ArrayAdapter data on the Spinner
         spinner_ca.setAdapter(aa);
         spinner_ca.setOnItemSelectedListener(this);
+
+        if (conIds.size() > 0) {
+            if (!CommonMethods.getSelectedPosition(context).isEmpty()) {
+                spinner_ca.setSelection(Integer.parseInt(CommonMethods.getSelectedPosition(context)));
+            }
+        }
+
+        try {
+            //if (conIds.size() > 0) {
+            iv_ca_drop.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //if(spinner_ca.getSelectedItem() == null) { // user selected nothing...
+                    spinner_ca.performClick();
+                    // }
+                }
+            });
+        } catch (Exception e) {
+
+        }
+        // }
 
 
         if ((!conid.equals("x"))) {

@@ -115,7 +115,7 @@
     <string name="calculate_energyr">Calculate energy</string>
     <string name="feedback">FEEDBACK</string>
     <string name="technical_feedback">Technical feedback</string>
-    <string name="please_enter_ca_number">Please enter CA number</string>
+    <string name="please_enter_ca_number">Please enter CA/Consumer number</string>
     <string name="agree_terms_amp_conditions"><![CDATA[Agree Terms & Conditions]]></string>
     <string name="view_details">View Details</string>
     <string name="customer_id">Customer ID:</string>
@@ -228,7 +228,7 @@
     <string name="terms_and_conditions">Terms and Conditions</string>
 
     <string name="update_profile">Update Profile</string>
-    <string name="center_id">Center ID:</string>
+    <string name="center_id">Center ID:            </string>
     <string name="centre_add">Centre Add:</string>
     <string name="we_would_love_to_hear_your_technical_feedback_about_mobile_application_such_as_crashes_bugs_device_incompatibility_issue_if_you_wish_to_share_with_us">We would love to hear your technical feedback about mobile application, such as crashes,bugs,device incompatibility issue if you wish to share with us.</string>
     <string name="enter_your_feedback">Enter your feedback</string>

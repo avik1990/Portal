@@ -40,6 +40,8 @@ import java.net.URLConnection;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import me.saket.bettermovementmethod.BetterLinkMovementMethod;
+
 
 public class AboutUsActivity extends AppCompatActivity {
 
@@ -184,7 +186,7 @@ public class AboutUsActivity extends AppCompatActivity {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     tv_about_us.setText(HtmlCompat.fromHtml(text, 0));
 
-                    /*tv_about_us.setMovementMethod(BetterLinkMovementMethod.newInstance().setOnLinkClickListener((textView, url) -> {
+                    tv_about_us.setMovementMethod(BetterLinkMovementMethod.newInstance().setOnLinkClickListener((textView, url) -> {
 
                         if (Patterns.WEB_URL.matcher(url).matches()) {
                             //An web url is detected
@@ -210,12 +212,12 @@ public class AboutUsActivity extends AppCompatActivity {
 
 
                         return false;
-                    }));*/
+                    }));
 
 
                 } else {
                     tv_about_us.setText(HtmlCompat.fromHtml(text, 0));
-                    /*tv_about_us.setMovementMethod(BetterLinkMovementMethod.newInstance().setOnLinkClickListener((textView, url) -> {
+                    tv_about_us.setMovementMethod(BetterLinkMovementMethod.newInstance().setOnLinkClickListener((textView, url) -> {
 
                         if (Patterns.WEB_URL.matcher(url).matches()) {
                             //An web url is detected
@@ -239,7 +241,7 @@ public class AboutUsActivity extends AppCompatActivity {
 
 
                         return false;
-                    }));*/
+                    }));
                 }
             }
             catch (Exception ex){

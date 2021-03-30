@@ -117,7 +117,7 @@
     <string name="calculate_energyr">ऊर्जा की गणना करें</string>
     <string name="feedback">सुझाव</string>
     <string name="technical_feedback">तकनीकी प्रतिक्रिया</string>
-    <string name="please_enter_ca_number">कृपया CA नंबर दर्ज करें</string>
+    <string name="please_enter_ca_number">कृपया CA/Consumer नंबर दर्ज करें</string>
     <string name="agree_terms_amp_conditions">नियम और शर्तें सहमत हैं</string>
     <string name="view_details">विवरण देखें</string>
     <string name="customer_id">ग्राहक आईडी, ग्राहक पहचान:</string>

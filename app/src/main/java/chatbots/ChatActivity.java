@@ -205,16 +205,21 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.GetQu
         adapter = new ChatAdapter(context, this, coordinates, getPDFPath, getLikeDislike);
 
         if (cd.isConnected()) {
+            updateQuestions();
             String json = Utils.getChatData(context);
             if (json.isEmpty()) {
                 fetchQuestions();
             } else {
-                list_discoveryInstantSearchModel = (new Gson()).fromJson(json, new TypeToken<ArrayList<ChatResponseModel>>() {
-                }.getType());
-                lastCount = list_discoveryInstantSearchModel.size();
-                adapter.updateChatView(list_discoveryInstantSearchModel);
-                rvRecycler.setAdapter(adapter);
-                rvRecycler.smoothScrollToPosition(adapter.getItemCount() - 1);
+                try {
+                    list_discoveryInstantSearchModel = (new Gson()).fromJson(json, new TypeToken<ArrayList<ChatResponseModel>>() {
+                    }.getType());
+                    lastCount = list_discoveryInstantSearchModel.size();
+                    adapter.updateChatView(list_discoveryInstantSearchModel);
+                    rvRecycler.setAdapter(adapter);
+                    rvRecycler.smoothScrollToPosition(adapter.getItemCount() - 1);
+                } catch (Exception e) {
+
+                }
             }
         } else {
             String json = Utils.getChatData(context);
@@ -227,6 +232,10 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.GetQu
         }
 
         FetchUserDetails();
+    }
+
+    private void updateQuestions() {
+        UpdateQuestions();
     }
 
     private void initViews() {
@@ -274,7 +283,38 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.GetQu
     }
 
 
+    private void UpdateQuestions() {
+        Log.e("TestQuestions", "Fetching Questions");
+        ApiInterface service = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
+        Call<List<QuestionResponse>> call = service.getAllQuestions();
+        call.enqueue(new Callback<List<QuestionResponse>>() {
+
+            @Override
+            public void onResponse(Call<List<QuestionResponse>> call, Response<List<QuestionResponse>> response) {
+                questionResponse = response.body();
+
+                try {
+                    if (questionResponse != null) {
+                        Gson g = new Gson();
+                        String json = g.toJson(questionResponse);
+                        Utils.setQuestionData(context, json);
+                        inflateAutocompletetexView();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<QuestionResponse>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+
     private void fetchQuestions() {
+        Log.e("TestQuestions", "Fetching Questions");
         ApiInterface service = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
         Call<List<QuestionResponse>> call = service.getAllQuestions();
         call.enqueue(new Callback<List<QuestionResponse>>() {
@@ -1372,7 +1412,6 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.GetQu
                 //String value = String.valueOf(item.toString());
                 String value = String.valueOf(position);
                 // spinpos1 = String.valueOf(position);
-
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
@@ -1446,14 +1485,17 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.GetQu
             Toast.makeText(context, "Invalid CA Number", Toast.LENGTH_SHORT).show();
             return;
         } else {
-            char digits = stCA_NO.charAt(3);
+            char digits = stCA_NO.toUpperCase().charAt(3);
             int compareOneTwo = Character.compare(digits, 'S');
             Log.d("TAG", "downloadfile: " + compareOneTwo);
-            if (compareOneTwo == 0) {
-                docURL = "http://portal.tpcentralodisha.com:8080/ConsumerBillInfo_2021/PrintPDF?ConsumerID=" + stCA_NO;
-            } else {
-                docURL = "http://portal.tpcentralodisha.com:8080/ConsumerBillInfo_2021/BillDetails2021.jsp?ConsumerID=" + stCA_NO;
+            if (!stCA_NO.isEmpty()) {
+                if (compareOneTwo == 0) {
+                    docURL = "http://portal.tpcentralodisha.com:8080/ConsumerBillInfo_2021/PrintPDF?ConsumerID=" + stCA_NO.toUpperCase();
+                } else {
+                    docURL = "http://portal.tpcentralodisha.com:8080/ConsumerBillInfo_2021/BillDetails2021.jsp?ConsumerID=" + stCA_NO.toUpperCase();
+                }
             }
+            Log.e("DOWNLFILEURL", docURL);
         }
 
 

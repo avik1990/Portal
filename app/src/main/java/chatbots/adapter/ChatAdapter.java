@@ -24,14 +24,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cesu.itcc05.consumeportal.R;
 import com.google.android.flexbox.FlexboxLayout;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import chatbots.extras.Utils;
 import chatbots.model.ChatResponseModel;
+import chatbots.model.QuestionResponse;
 
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -80,9 +83,13 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public void clearRecyclerView() {
-        int size = list_discoveryInstantSearchModel.size();
-        list_discoveryInstantSearchModel.clear();
-        notifyItemRangeRemoved(0, size);
+        try {
+            int size = list_discoveryInstantSearchModel.size();
+            list_discoveryInstantSearchModel.clear();
+            notifyItemRangeRemoved(0, size);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public ChatAdapter(Context context, GetQuestionId getQuestionId, GetMapCoordinates getCoordinate, GetPDFPath getPDFPath, GetLikeDislike getLikeDislike) {
@@ -435,12 +442,14 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     iv.setId(i + 1);
                     iv.setLayoutParams(buttonLayoutParams);
                     iv.setTag(i);
+                    iv.setBackground(context.getResources().getDrawable(R.drawable.imageview_border));
+
                     Picasso.with(context)
                             .load(list_discoveryInstantSearchModel.get(l)
                                     .getListImages().get(i).getImgURL())
                             .into(iv);
                     final int finalI = i;
-                    if(list_discoveryInstantSearchModel.get(l).getListImages().get(finalI).getClickType()!=null){
+                    if (list_discoveryInstantSearchModel.get(l).getListImages().get(finalI).getClickType() != null) {
                         iv.setOnClickListener(new View.OnClickListener() {
 
                             @Override
@@ -549,10 +558,15 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         buttonLayoutParams.setMargins(5, 5, 5, 5);
 
         try {
+            String question = Utils.getQuestionData(context);
+            Log.e("QUESTIONS", question);
+            List<QuestionResponse> questionResponse=new ArrayList<>();
+            questionResponse= (new Gson()).fromJson(question, new TypeToken<ArrayList<QuestionResponse>>() {
+            }.getType());
             userviewViewHolder.flexContainer.removeAllViews();
-            for (int i = 0; i < list_discoveryInstantSearchModel.get(l).getListQuestions().size(); i++) {
+            for (int i = 0; i < questionResponse.size(); i++) {
                 final TextView tv = new TextView(context);
-                tv.setText(list_discoveryInstantSearchModel.get(l).getListQuestions().get(i).getqUESTION());
+                tv.setText(questionResponse.get(i).getqUESTION());
                 tv.setHeight(70);
                 tv.setTextSize(15.0f);
                 tv.setGravity(Gravity.CENTER);
@@ -560,18 +574,19 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 tv.setBackground(context.getResources().getDrawable(R.drawable.rounded_corner_yellow));
                 tv.setId(i + 1);
                 tv.setLayoutParams(buttonLayoutParams);
-                tv.setTag(list_discoveryInstantSearchModel.get(l).getListQuestions().get(i).getfLAG());
+                tv.setTag(questionResponse.get(i).getfLAG());
                 tv.setPadding(10, 10, 10, 10);
 
                 final int finalI = i;
+                List<QuestionResponse> finalQuestionResponse = questionResponse;
                 tv.setOnClickListener(new View.OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
                         String ID = tv.getTag().toString();
-                       // list_discoveryInstantSearchModel.get(l).getListQuestions().get(finalI).getiD();
+                        // list_discoveryInstantSearchModel.get(l).getListQuestions().get(finalI).getiD();
                         //Toast.makeText(context, list_discoveryInstantSearchModel.get(l).getListQuestions().get(finalI).getiD(),Toast.LENGTH_SHORT).show();
-                        getQuestionId.getQuestionID(ID, tv.getText().toString().trim(),list_discoveryInstantSearchModel.get(l).getListQuestions().get(finalI).getiD());
+                        getQuestionId.getQuestionID(ID, tv.getText().toString().trim(), finalQuestionResponse.get(finalI).getiD());
 
                     }
                 });
@@ -637,7 +652,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             userviewViewHolder.tvTitle.setText("Fight Against Corona");
         } else if (list_discoveryInstantSearchModel.get(l).getInputtype().equalsIgnoreCase("Complaint Registered")) {
             userviewViewHolder.tvTitle.setText("Your Complaint Number is");
-        }else{
+        } else {
             userviewViewHolder.ivForward.setVisibility(View.GONE);
             userviewViewHolder.tvTitle.setText(list_discoveryInstantSearchModel.get(l).getInputtype());
         }

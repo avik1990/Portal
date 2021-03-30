@@ -4,9 +4,11 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,25 +46,32 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-public class PaymentCentreActivity extends AppCompatActivity {
+public class PaymentCentreActivity extends AppCompatActivity implements PaymentCentreDataAdapter.PassCoordinates {
+
     private Context mContext;
     private RecyclerView recycler_payment;
     private ProgressDialog progressDialog;
-    List<PaymentCenterModal>paymentCenterModals=new ArrayList<>();
+    List<PaymentCenterModal> paymentCenterModals = new ArrayList<>();
     PaymentCentreDataAdapter paymentCentreDataAdapter;
     private ImageView iv_back;
+    ImageView ivSearch;
+    SearchView searchview;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment_centre);
-        mContext=this;
-        recycler_payment=findViewById(R.id.recycler_payment);
-        iv_back=findViewById(R.id.iv_backs);
+        mContext = this;
+        recycler_payment = findViewById(R.id.recycler_payment);
+        iv_back = findViewById(R.id.iv_backs);
+        ivSearch = findViewById(R.id.ivSearch);
+        searchview = findViewById(R.id.searchview);
 
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,46 +79,86 @@ public class PaymentCentreActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        initAdapter();
+
+        searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                paymentCentreDataAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                // if (!newText.isEmpty()) {
+                paymentCentreDataAdapter.getFilter().filter(query);
+                //} else {
+                //  initAdapter();
+                //}
+                return false;
+            }
+        });
 
 
-        if (CommonMethods.isNetworkAvailable(mContext)){
-            String url="http://122.185.188.231/TPCODLCONNECTSERVICE/TPCODLConnectService.asmx/Offices_list?checksum=01091981";
+        if (CommonMethods.isNetworkAvailable(mContext)) {
+            String url = "http://122.185.188.231/TPCODLCONNECTSERVICE/TPCODLConnectService.asmx/Offices_list?checksum=01091981";
             new fetchBannerData().execute(url);
+        } else {
+            Toast.makeText(mContext, "No internet connection, please connect to internet", Toast.LENGTH_SHORT).show();
         }
-        else {
-            Toast.makeText(mContext,"No internet connection, please connect to internet",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void getCoordinates(String latitude, String longitude) {
+        //Toast.makeText(mContext, latitude + "-" + longitude, Toast.LENGTH_SHORT).show();
+        if (latitude.isEmpty() || longitude.isEmpty()) {
+            Toast.makeText(mContext, "Location not valid. Please Contact Admin", Toast.LENGTH_SHORT).show();
+            return;
         }
 
+        if (latitude == null || longitude == null) {
+            Toast.makeText(mContext, "Location not valid. Please Contact Admin", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (latitude.equalsIgnoreCase("0") || longitude.equalsIgnoreCase("0")) {
+            Toast.makeText(mContext, "Location not valid. Please Contact Admin", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String path = "google.navigation:q=" + latitude + "," + longitude;
+        Uri gmmIntentUri = Uri.parse(path);
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        startActivity(mapIntent);
 
     }
 
-    private  class fetchBannerData extends AsyncTask<String, Integer, String> {
+    private class fetchBannerData extends AsyncTask<String, Integer, String> {
 
 
         @Override
         protected String doInBackground(String... params) {
             //activity = (MainActivity)params[0];
-            String strURL=params[0];
+            String strURL = params[0];
             URLConnection conn = null;
             InputStream inputStreamer = null;
-            String bodycontent=null;
+            String bodycontent = null;
             Log.d("DemoApp", " strURL   " + strURL);
 
             try {
-                URL url =null;
+                URL url = null;
                 url = new URL(strURL);
                 URLConnection uc = url.openConnection();
                 uc.setDoInput(true);
                 BufferedReader in = null;
-                in=new BufferedReader(new InputStreamReader(uc.getInputStream()));
-                String inputLine="";
-                String inputLine1="";
+                in = new BufferedReader(new InputStreamReader(uc.getInputStream()));
+                String inputLine = "";
+                String inputLine1 = "";
                 StringBuilder a = new StringBuilder();
                 Log.d("DemoApp", " a size   " + a.length());
                 while ((inputLine = in.readLine()) != null) {
                     a.append(inputLine);
-                    inputLine1=inputLine;
+                    inputLine1 = inputLine;
                     //  Log.d("DemoApp", " input line " + a.toString());
                 }
                 in.close();
@@ -118,44 +168,37 @@ public class PaymentCentreActivity extends AppCompatActivity {
                 DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
                 DocumentBuilder db = dbf.newDocumentBuilder();
                 Document doc = db.parse(new InputSource(url.openStream()));
-                Element element=doc.getDocumentElement();
+                Element element = doc.getDocumentElement();
                 element.normalize();
                 NodeList nList = doc.getElementsByTagName("Table");
-
                 paymentCenterModals.clear();
-                for (int temp = 0; temp < nList.getLength(); temp++)
-                {
+
+                for (int temp = 0; temp < nList.getLength(); temp++) {
                     Node node = nList.item(temp);
                     if (node.getNodeType() == Node.ELEMENT_NODE) {
                         Element element2 = (Element) node;
-
-                        PaymentCenterModal paymentCenterModal=new PaymentCenterModal();
-
+                        PaymentCenterModal paymentCenterModal = new PaymentCenterModal();
                         paymentCenterModal.setOfficeId(getValue("OFFICE_ID", element2));
                         paymentCenterModal.setOfficeAddress(getValue("OFFICE_ADDRESS", element2));
                         paymentCenterModal.setOfficeLat(getValue("OFFICE_LAT", element2));
-                        paymentCenterModal.setOfficeLat(getValue("OFFICE_LONG", element2));
+                        paymentCenterModal.setOfficeLong(getValue("OFFICE_LONG", element2));
                         paymentCenterModals.add(paymentCenterModal);
                     }
                 }
-
-
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
             return bodycontent;
         }
-        @Override
 
+        @Override
         protected void onPreExecute() {
             progressDialog = ProgressDialog.show(PaymentCentreActivity.this, "Fetching Data", "Please Wait:: connecting to server");
-
-            ConnectivityManager cm = (ConnectivityManager)PaymentCentreActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+            ConnectivityManager cm = (ConnectivityManager) PaymentCentreActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-            if(activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
-            }else{
+            if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
+            } else {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(PaymentCentreActivity.this);
                 alertDialogBuilder.setTitle("Enable Data");
                 alertDialogBuilder.setMessage("Enable Data & Retry")
@@ -176,27 +219,29 @@ public class PaymentCentreActivity extends AppCompatActivity {
                 alertDialog.show();
             }
         }
+
         @Override
         protected void onPostExecute(String str) {
             Log.d("DemoApp", " str   " + str);
             progressDialog.dismiss();
-
-            paymentCentreDataAdapter.notifyDataSetChanged();
-
+            //paymentCentreDataAdapter.notifyDataSetChanged();
+            initAdapter();
             //fetChImage(empId);
         }
-
     }
+
     private static String getValue(String tag, Element element) {
         NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
         Node node = nodeList.item(0);
         return node.getNodeValue();
     }
-    private void initAdapter() {
-        recycler_payment.setLayoutManager(new LinearLayoutManager(mContext));
 
-        paymentCentreDataAdapter = new PaymentCentreDataAdapter(mContext, paymentCenterModals);
-        recycler_payment.setAdapter(paymentCentreDataAdapter);
+    private void initAdapter() {
+        if (paymentCenterModals.size() > 0) {
+            recycler_payment.setLayoutManager(new LinearLayoutManager(mContext));
+            paymentCentreDataAdapter = new PaymentCentreDataAdapter(mContext, paymentCenterModals, this);
+            recycler_payment.setAdapter(paymentCentreDataAdapter);
+        }
         //paymentCentreDataAdapter.notifyDataSetChanged();
     }
 

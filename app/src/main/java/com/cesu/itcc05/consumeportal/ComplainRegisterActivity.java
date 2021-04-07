@@ -113,22 +113,68 @@ public class ComplainRegisterActivity extends Activity {
         //End///
         StrUrl="http://portal.tpcentralodisha.com:8070"+"/IncomingSMS/CESU_ComplaintRegister.jsp?";
         Bundle commdtls = getIntent().getExtras();
-        consIDval = commdtls.getString("consIDval").trim();
-        emailval = commdtls.getString("emailval").trim();
-        mobval = commdtls.getString("mobval").trim();
-        strAddrval = commdtls.getString("strAddrval").trim();
-        strregtype = commdtls.getString("regtype").trim();
-        conname= commdtls.getString("conname");
+        try {
+            consIDval = commdtls.getString("consIDval").trim();
+
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
+       try {
+           emailval = commdtls.getString("emailval").trim();
+
+       }
+       catch (Exception ex){
+           ex.printStackTrace();
+       }
+       try {
+           mobval = commdtls.getString("mobval").trim();
+       }
+       catch (Exception ex){
+           ex.printStackTrace();
+       }
+       try {
+           strAddrval = commdtls.getString("strAddrval").trim();
+       }
+       catch (Exception ex){
+           ex.printStackTrace();
+       }
+       try {
+           strregtype = commdtls.getString("regtype").trim();
+
+       }
+       catch (Exception ex){
+           ex.printStackTrace();
+       }
+       try {
+           conname= commdtls.getString("conname");
+
+       }
+       catch (Exception ex){
+           ex.printStackTrace();
+       }
+       try {
+           strcomsubcat= commdtls.getString("comsubcat");
+
+       }
+       catch (Exception ex){
+           ex.printStackTrace();
+       }
+
+
         //Added on 040520 by Santi
-        strcomsubcat= commdtls.getString("comsubcat");
 
 
        /* strcomsubcat="1|101,Meter Defect,0;102,Meter Testing,0;103,Meter Burnt,0;104,Meter Reading,0;105,Other Meter Related,0;106,Billing ,0;107,Billing Information Change,0;108,\n" +
                 "Reconnection/Disconnection Request,0;109,NSC,0;110,Enforcement,0;111,General Enquiry,0;112,Supply Related,0;113,Safety Aspects,0;\n" +
                 "10101,Meter Stuck,101;10102,Meter No Display,101;10103,Meter Glass Broken,101;10104,Meter Change,101;10105,Meter Seal Open,101;10106,Other Meter Defects,101;10201,Meter - Fast,102;10202,Meter - Slow ,102;10301,Terminial Burnt,103;10302,Meter Burnt,103;10401,No Reading,104;10402,Wrong Reading,104;10501,Meter Shift,105;10502,Service Wire Related,105;10503,Phase Conversion,105;10504,Other Complaints,105;10601,Bill Revision,106;10602,Bill Adjustment details,106;10603,Bill not Served,106;10604,Payment not reflected in bill,106;10605,Duplicate Bill Request,106;10606,Meter -Change,106;10607,Meter Seal Open,106;10608,Service Wire Related,106;10609,Phase Conversion,106;10610,Shifting of Meter,106;10611,Meter Reading Not Taken,106;10612,Door Locked Cases,106;10613,Meter Reading-Correction Request,106;10614,Arrear Dispute,106;10615,Contracted Load Not Printing,106;10616,Wrong/ Non-Posting in Bill,106;10617,Other Billing Related,106;10701,Name of Change/Ownership Change,107;10702,Correction of Name,107;10703,Correction of Address,107;10704,Tariff Change,107;10801,Consumer's Disconnection Request ,108;10802,Disconnection Request other than Consumer,108;10803,Re-connection of power Supply,108;10901,New Connection,109;10902,Enhancement of CD,109;10903,Reduction of CD,109;11001,Reporting of Power Theft,110;11101,General Enquiry(Commercial),111;11201,Power Interruption,112;11202,Low Voltage ,112;11203,New Infrastructure(Additional Line/ Substation/transformer Upgradation etc.),112;11204,Transformer Brunt,112;11205,Area No Supply,112;11206,Power Supply Fluctuating,112;11301,No Fencing,113;11302,Pole Shifting,113;11303,Pole Damage,113;11304,Pole Tilting,113;11305,Conductor Sagging,113;11306,Sub-Station Shifting,113;11307,Tree Trimming,113;11308,Other Safety Aspects,113;";
 */
-        Log.d("DemoApp", " strcomsubcat reg val  " + strcomsubcat);
-        String[] comsubcatcode = strcomsubcat.split(";");
+
+
+           Log.d("DemoApp", " strcomsubcat reg val  " + strcomsubcat);
+           String[] comsubcatcode = strcomsubcat.split(";");
+
+
 
         int arrayparam=80;
         ContentWrap = new String[arrayparam];

@@ -29,13 +29,6 @@ public class ChatResponseModel {
     String date;
 
 
-    public ChatResponseModel(String answerID, String answers, int itemtype,int likeDislike1,String date1) {
-        this.answerID = answerID;
-        this.answers = answers;
-        Itemtype = itemtype;
-        this.likeDislike=likeDislike1;
-        this.date = date1;
-    }
 
     public ChatResponseModel(String inputtype, int itemtype, String userTypedquestions,int likeDislike1,String date1) {
         Itemtype = itemtype;
@@ -52,15 +45,6 @@ public class ChatResponseModel {
         this.date=date1;
     }
 
-    public ChatResponseModel(int itemtype, String inputtype, String latitude, String longitude, String userTypedquestions,int likeDislike1,String date1) {
-        Itemtype = itemtype;
-        Inputtype = inputtype;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        UserTypedquestions = userTypedquestions;
-        this.likeDislike=likeDislike1;
-        this.date=date1;
-    }
 
 
     public ChatResponseModel(int itemtype, List<QuestionResponse> listQuestions,int likeDislike1,String date1) {

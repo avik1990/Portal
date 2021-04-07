@@ -93,7 +93,7 @@
     <string name="bill_month">Bill Month:</string>
     <string name="payable_amount">Payable Amount:</string>
     <string name="due_date">Due Date:</string>
-    <string name="outage">OUTAGE</string>
+    <string name="outage">POWER CUT DETAILS</string>
     <string name="outage_history_outage_details">Outage History | Outage details</string>
     <string name="safety">SAFETY</string>
     <string name="report_safety_incident">Report safety incident</string>
@@ -228,7 +228,7 @@
     <string name="terms_and_conditions">Terms and Conditions</string>
 
     <string name="update_profile">Update Profile</string>
-    <string name="center_id">Center ID:            </string>
+    <string name="center_id">Center ID:</string>
     <string name="centre_add">Centre Add:</string>
     <string name="we_would_love_to_hear_your_technical_feedback_about_mobile_application_such_as_crashes_bugs_device_incompatibility_issue_if_you_wish_to_share_with_us">We would love to hear your technical feedback about mobile application, such as crashes,bugs,device incompatibility issue if you wish to share with us.</string>
     <string name="enter_your_feedback">Enter your feedback</string>
@@ -280,5 +280,15 @@
     <string name="please_provide_details_to_register_theft_incident">(Please provide details to register theft incident)</string>
     <string name="please_provide_details_to_verify_employee">(Please provide details to verify employee)</string>
     <string name="ask">ask</string>
+    <string name="apply_new_connection">APPLY NEW CONNECTION</string>
+    <string name="you_can_also_directly_message_us_on_this_number">* You can also directly message on</string>
+    <string name="or_whatsapp_us_on_the_same_number">OR whatsapp us on the same number</string>
+    <string name="division_name">Division Name</string>
+    <string name="feeder_name">Feeder Name:</string>
+    <string name="affected_area">Affected Area</string>
+    <string name="no_outage_found">NO OUTAGE FOUND</string>
+    <string name="start_date">Start Date</string>
+    <string name="affected_duration">Affected Time:</string>
+    <string name="outage_reason">Outage Reason</string>
     <!-- Finish. -->
 </resources>

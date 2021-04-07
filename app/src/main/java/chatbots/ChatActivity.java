@@ -9,8 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -43,17 +41,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cesu.itcc05.consumeportal.CommonMethods;
 import com.cesu.itcc05.consumeportal.ComplainModal;
 import com.cesu.itcc05.consumeportal.ComplainModalSubCategory;
-import com.cesu.itcc05.consumeportal.ComplainRegisterActivity;
-import com.cesu.itcc05.consumeportal.ComplaintLoginActivity;
-import com.cesu.itcc05.consumeportal.ConsumerMenuActivity;
 import com.cesu.itcc05.consumeportal.DatabaseAccess;
-import com.cesu.itcc05.consumeportal.HistoryBillActivity;
-import com.cesu.itcc05.consumeportal.HistoryConsumptionActivity;
-import com.cesu.itcc05.consumeportal.HistoryPaymentActivity;
-import com.cesu.itcc05.consumeportal.HistoryPaymentBillActivity;
-import com.cesu.itcc05.consumeportal.InstantPaymentActivity;
 import com.cesu.itcc05.consumeportal.R;
-import com.cesu.itcc05.consumeportal.ViewPDFActivity;
 import com.cesu.itcc05.consumeportal.modal.BannerModal;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -69,8 +58,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.text.Format;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -205,21 +192,16 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.GetQu
         adapter = new ChatAdapter(context, this, coordinates, getPDFPath, getLikeDislike);
 
         if (cd.isConnected()) {
-            updateQuestions();
             String json = Utils.getChatData(context);
             if (json.isEmpty()) {
                 fetchQuestions();
             } else {
-                try {
-                    list_discoveryInstantSearchModel = (new Gson()).fromJson(json, new TypeToken<ArrayList<ChatResponseModel>>() {
-                    }.getType());
-                    lastCount = list_discoveryInstantSearchModel.size();
-                    adapter.updateChatView(list_discoveryInstantSearchModel);
-                    rvRecycler.setAdapter(adapter);
-                    rvRecycler.smoothScrollToPosition(adapter.getItemCount() - 1);
-                } catch (Exception e) {
-
-                }
+                list_discoveryInstantSearchModel = (new Gson()).fromJson(json, new TypeToken<ArrayList<ChatResponseModel>>() {
+                }.getType());
+                lastCount = list_discoveryInstantSearchModel.size();
+                adapter.updateChatView(list_discoveryInstantSearchModel);
+                rvRecycler.setAdapter(adapter);
+                rvRecycler.smoothScrollToPosition(adapter.getItemCount() - 1);
             }
         } else {
             String json = Utils.getChatData(context);
@@ -232,10 +214,6 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.GetQu
         }
 
         FetchUserDetails();
-    }
-
-    private void updateQuestions() {
-        UpdateQuestions();
     }
 
     private void initViews() {
@@ -283,38 +261,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.GetQu
     }
 
 
-    private void UpdateQuestions() {
-        Log.e("TestQuestions", "Fetching Questions");
-        ApiInterface service = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
-        Call<List<QuestionResponse>> call = service.getAllQuestions();
-        call.enqueue(new Callback<List<QuestionResponse>>() {
-
-            @Override
-            public void onResponse(Call<List<QuestionResponse>> call, Response<List<QuestionResponse>> response) {
-                questionResponse = response.body();
-
-                try {
-                    if (questionResponse != null) {
-                        Gson g = new Gson();
-                        String json = g.toJson(questionResponse);
-                        Utils.setQuestionData(context, json);
-                        inflateAutocompletetexView();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<QuestionResponse>> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
-    }
-
-
     private void fetchQuestions() {
-        Log.e("TestQuestions", "Fetching Questions");
         ApiInterface service = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
         Call<List<QuestionResponse>> call = service.getAllQuestions();
         call.enqueue(new Callback<List<QuestionResponse>>() {
@@ -1412,6 +1359,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.GetQu
                 //String value = String.valueOf(item.toString());
                 String value = String.valueOf(position);
                 // spinpos1 = String.valueOf(position);
+
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
@@ -1495,11 +1443,10 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.GetQu
                     docURL = "http://portal.tpcentralodisha.com:8080/ConsumerBillInfo_2021/BillDetails2021.jsp?ConsumerID=" + stCA_NO.toUpperCase();
                 }
             }
-            Log.e("DOWNLFILEURL", docURL);
+
         }
 
-
-        String url = docURL;
+            String url = docURL;
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         request.setDescription("Downloading file...");
         request.setTitle(stCA_NO + "-BILL");

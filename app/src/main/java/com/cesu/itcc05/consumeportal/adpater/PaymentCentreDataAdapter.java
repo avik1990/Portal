@@ -48,7 +48,7 @@ public class PaymentCentreDataAdapter extends RecyclerView.Adapter<PaymentCentre
 
     @NonNull
     @Override
-    public PaymentCentreDataAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View listItem = layoutInflater.inflate(R.layout.list_item_payment, parent, false);
         ViewHolder viewHolder = new ViewHolder(listItem);
@@ -56,8 +56,8 @@ public class PaymentCentreDataAdapter extends RecyclerView.Adapter<PaymentCentre
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PaymentCentreDataAdapter.ViewHolder holder, final int position) {
-      //  holder.tv_id_value.setText(contactListFiltered.get(position).getOfficeId());
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        holder.tv_id_value.setText(contactListFiltered.get(position).getOfficeId());
         /*try {
             if (searchText != null || !searchText.isEmpty()) {
                 //Log.e("searchTextDemo", searchText);
@@ -78,6 +78,21 @@ public class PaymentCentreDataAdapter extends RecyclerView.Adapter<PaymentCentre
             }
         } catch (Exception e) {
 
+        }
+
+        try {
+
+            if (contactList.get(position).getOfficeLat().equalsIgnoreCase("0")||contactList.get(position).getOfficeLat()==null){
+                holder.ivLocation.setImageResource(R.drawable.placeholder);
+            }
+            else {
+                holder.ivLocation.setImageResource(R.drawable.pin);
+            }
+
+
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
         }
 
         holder.ivLocation.setOnClickListener(new View.OnClickListener() {

@@ -602,7 +602,7 @@ public class SafetyActivity extends AppCompatActivity {
 
                 //Log.e("Object response", response.toString());
 
-                System.out.println("sdfgh=="+responseSubmit);
+                System.out.println("sdfgh=="+response);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -681,22 +681,7 @@ public class SafetyActivity extends AppCompatActivity {
             try {
                 URL url =null;
                 url = new URL(strURL);
-                URLConnection uc = url.openConnection();
-                uc.setDoInput(true);
-                BufferedReader in = null;
-                in=new BufferedReader(new InputStreamReader(uc.getInputStream()));
-                String inputLine="";
-                String inputLine1="";
-                StringBuilder a = new StringBuilder();
-                Log.d("DemoApp", " a size   " + a.length());
-                while ((inputLine = in.readLine()) != null) {
-                    a.append(inputLine);
-                    inputLine1=inputLine;
-                    //  Log.d("DemoApp", " input line " + a.toString());
-                }
-                in.close();
 
-                Log.d("DemoApp", " fullString   " + a.toString());
 
                 DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
                 DocumentBuilder db = dbf.newDocumentBuilder();

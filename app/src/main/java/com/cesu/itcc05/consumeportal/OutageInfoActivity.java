@@ -12,6 +12,8 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -39,6 +41,16 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cesu.itcc05.consumeportal.adpater.OutageDeatilsAdapter;
+import com.cesu.itcc05.consumeportal.modal.OutageModal;
+import com.cesu.itcc05.consumeportal.modal.PaymentCenterModal;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -46,6 +58,9 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import static java.lang.System.exit;
 
@@ -82,6 +97,10 @@ public class OutageInfoActivity extends AppCompatActivity {
     private ImageView iv_back;
     private ProgressDialog progressDialog;
     private ImageView btntrmscnd;
+    private ArrayList<OutageModal>outageModals=new ArrayList<>();
+    List<String> list = new ArrayList<String>();
+    private RecyclerView rv_outage;
+    OutageDeatilsAdapter outageDeatilsAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +110,10 @@ public class OutageInfoActivity extends AppCompatActivity {
         //spinner.setVisibility(View.GONE);
         ll_spinner=findViewById(R.id.ll_spinner);
         iv_back=findViewById(R.id.iv_backs);
+        rv_outage=findViewById(R.id.rv_outage);
+        initAdapter();
+
+
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -260,18 +283,28 @@ public class OutageInfoActivity extends AppCompatActivity {
 
             }
         });*/
+
+
+
         btnsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 CommonMethods.hideKeyboard(OutageInfoActivity.this);
                 strconsIDval.setAllCaps(true);
-                if(Typeinfo.equals("qlinks")){
+             /*   if(Typeinfo.equals("qlinks")){
                     consIDval=  String.valueOf(spinner2.getSelectedItem()).trim();
                 }else{
                     consIDval = strconsIDval.getText().toString().trim().toUpperCase();
+                }*/
+                if (list.size()>1){
+                    consIDval=  String.valueOf(spinner2.getSelectedItem()).trim();
                 }
-                consIDval = strconsIDval.getText().toString().trim().toUpperCase();
+                else {
+                    consIDval = strconsIDval.getText().toString().trim().toUpperCase();
+                }
+
+
                 Log.d("DemoApp", "consIDval" + consIDval);
                 if (TextUtils.isEmpty(consIDval)) {
                     strconsIDval.setError("Please enter consumer/CA number");
@@ -300,7 +333,7 @@ public class OutageInfoActivity extends AppCompatActivity {
     public void  addItemsOnSpinner2() {
 
         spinner2 = (Spinner) findViewById(R.id.spinner2);
-        List<String> list = new ArrayList<String>();
+        list.clear();
         databaseAccess = DatabaseAccess.getInstance(context);
         databaseAccess.open();
         String strSelectSQL_02 = "SELECT CONSUMER_ID,CONSUMER_NAME,CONSUMER_ADD "+
@@ -314,14 +347,22 @@ public class OutageInfoActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner2.setAdapter(dataAdapter);
+        if (list.size() > 0) {
+            if (!CommonMethods.getSelectedPosition(context).isEmpty()) {
+                spinner2.setSelection(Integer.parseInt(CommonMethods.getSelectedPosition(context)));
+            }
+        }
+
         /////////////
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                CommonMethods.saveSelectedPosition(context, "" + position);
                 Object item = parent.getItemAtPosition(position);
                 // String value = String.valueOf(item.toString());
                 String value = String.valueOf(position);
                 // consIDval=String.valueOf(position);
                 consIDval=String.valueOf(spinner2.getSelectedItem());
+
                 databaseAccess = DatabaseAccess.getInstance(context);
                 databaseAccess.open();
                 String strSelectSQL_02 = "SELECT CONSUMER_ID,CONSUMER_NAME,CONSUMER_ADD "+
@@ -384,7 +425,7 @@ public class OutageInfoActivity extends AppCompatActivity {
         super.onResume();
         ChkConnectivity.activityResumed();// On Resume notify the Application
     }
-    private String funcUrlCheck(int resCode){
+    private void funcUrlCheck(int resCode){
         SharedPreferences sessiondata = getApplicationContext().getSharedPreferences("sessionval", 0);
         CompanyID =sessiondata.getString("CompanyID", null); // getting String
 
@@ -393,17 +434,21 @@ public class OutageInfoActivity extends AppCompatActivity {
         }
         divcode=consIDval.substring(0,3);
         dbtype=consIDval.substring(3,4);
-        consacc=consIDval.substring(4);
+        consacc=consIDval;
         if(dbtype.equals("S")){
             dbtype="1";
         }else{
             dbtype="2";
         }
             if(resCode==1){
-                AuthURL =StrUrl+"un=TEST&pw=TEST&CompanyID="+10+"&ReportID=1075&strDivCode="+divcode+"&strCons_Acc="+consacc;
+                //AuthURL =StrUrl+"un=TEST&pw=TEST&CompanyID="+10+"&ReportID=1075&strDivCode="+divcode+"&strCons_Acc="+consacc;
+
+                AuthURL = "http://122.185.188.231/TPCODLCONNECTSERVICE/TPCODLConnectService.asmx/Get_Current_Outage?checksum=01091981&ConsumerAccount="+consacc;
+
                 new UserAuthOnline().execute(AuthURL);
             }else if(resCode==2){
-                AuthURL =StrUrl+"un=TEST&pw=TEST&CompanyID="+10+"&ReportID=1075&strDivCode="+divcode+"&strCons_Acc="+consacc;
+              //  AuthURL =StrUrl+"un=TEST&pw=TEST&CompanyID="+10+"&ReportID=1075&strDivCode="+divcode+"&strCons_Acc="+consacc;
+                AuthURL = "http://122.185.188.231/TPCODLCONNECTSERVICE/TPCODLConnectService.asmx/Get_Current_Outage?checksum=01091981&ConsumerAccount="+consacc;
                 new UserAuthOnline().execute(AuthURL);
             }else{
                 AuthURL="ServerOut";
@@ -411,7 +456,13 @@ public class OutageInfoActivity extends AppCompatActivity {
                 //   if(code==1){MainActivity.this.finish();}
             }
             Log.d("DemoApp", "in Loop AuthURL" + AuthURL);
-        return AuthURL;
+
+    }
+    private void initAdapter() {
+        if (GlobalVariable.outageModals.size() > 0) {
+
+        }
+        //paymentCentreDataAdapter.notifyDataSetChanged();
     }
     private  class UserAuthOnline extends AsyncTask<String, Integer, String> {
         ProgressDialog progressDialog;
@@ -427,22 +478,74 @@ public class OutageInfoActivity extends AppCompatActivity {
             try {
 
                 URL url = new URL(strURL);
-                URLConnection uc = url.openConnection();
-                uc.setDoInput(true);
-                BufferedReader in = new BufferedReader(new InputStreamReader(uc.getInputStream()));
-                String inputLine;
-                StringBuilder a = new StringBuilder();
-                while ((inputLine = in.readLine()) != null)
-                    a.append(inputLine);
-                in.close();
-                Log.d("DemoApp", " fullString   " + a.toString());
-                String html = a.toString();
-                int start = html.indexOf("<body>")+"<body>".length();
-                int end = html.indexOf("</body>", start);
-                bodycontent = html.substring(start, end);
-                Log.d("DemoApp", " start   " + start);
-                Log.d("DemoApp", " end   " + end);
-                Log.d("DemoApp", " body   " + bodycontent);
+                DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+                DocumentBuilder db = dbf.newDocumentBuilder();
+                Document doc = db.parse(new InputSource(url.openStream()));
+                Element element = doc.getDocumentElement();
+                element.normalize();
+                NodeList nList = doc.getElementsByTagName("Table");
+                outageModals.clear();
+                GlobalVariable.outageModals.clear();
+                for (int temp = 0; temp < nList.getLength(); temp++) {
+                    Node node = nList.item(temp);
+                    if (node.getNodeType() == Node.ELEMENT_NODE) {
+                        Element element2 = (Element) node;
+                        OutageModal paymentCenterModal = new OutageModal();
+
+                        try {
+                            paymentCenterModal.setDIVISION_NAME(getValue("DIVISION_NAME", element2));
+
+                        }
+                        catch (Exception ex){
+                            ex.printStackTrace();
+                        }
+                        try {
+                            paymentCenterModal.setFEEDER_NAME(getValue("FEEDER_NAME", element2));
+                        }
+                        catch (Exception ex){
+                            ex.printStackTrace();
+                        }
+
+                        try {
+                            paymentCenterModal.setSTART_DATE(getValue("START_DATE", element2));
+                        }
+                        catch (Exception ex){
+                            ex.printStackTrace();
+                        }
+
+                        try {
+                            paymentCenterModal.setSTART_TIME(getValue("START_TIME", element2));
+                        }
+                        catch (Exception ex){
+                            ex.printStackTrace();
+                        }
+                        try {
+                            paymentCenterModal.setOutage_subtype(getValue("outage_subtype", element2));
+                        }
+                        catch (Exception ex){
+                            ex.printStackTrace();
+                        }
+
+                        try {
+                            paymentCenterModal.setPROBABLE_RESTORE_TIME(getValue("PROBABLE_RESTORE_TIME", element2));
+                        }
+                        catch (Exception ex){
+                            ex.printStackTrace();
+                        }
+
+
+                        try {
+                            paymentCenterModal.setLIKELY_AREA_AFFECTED(getValue("LIKELY_AREA_AFFECTED", element2));
+
+                        }
+                        catch (Exception ex){
+                            ex.printStackTrace();
+                        }
+
+                        outageModals.add(paymentCenterModal);
+                        GlobalVariable.outageModals.addAll(outageModals);
+                    }
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
@@ -471,112 +574,143 @@ public class OutageInfoActivity extends AppCompatActivity {
         @Override
 
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(OutageInfoActivity.this, "Please wait...", "Fetching data");
 
-            ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-            if(activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
-                //spinner.setVisibility(View.VISIBLE);
-            }else{
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                alertDialogBuilder.setTitle("Enable Data");
-                alertDialogBuilder.setMessage("Enable Data & Retry")
-                        .setCancelable(false)
-                        .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        })
-                        .setNegativeButton("Back", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                if(Typeinfo.equals("qlinks")) {
-                                    Intent UserDashboard = new Intent(getApplicationContext(), QuicklinksDashboard.class);
-                                    startActivity(UserDashboard);
-                                    finish();
-                                }else{
-                                  onBackPressed();
+            try {
+                ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+                if(activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
+                    //spinner.setVisibility(View.VISIBLE);
+                    progressDialog = ProgressDialog.show(OutageInfoActivity.this, "Please wait...", "Fetching data");
+
+                }else{
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                    alertDialogBuilder.setTitle("Enable Data");
+                    alertDialogBuilder.setMessage("Enable Data & Retry")
+                            .setCancelable(false)
+                            .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
                                 }
-                            }
-                        });
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                // show it
-                alertDialog.show();
+                            })
+                            .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+
+                                    onBackPressed();
+
+                                }
+                            });
+                    // create alert dialog
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    // show it
+                    alertDialog.show();
+                }
             }
+            catch (Exception ex){
+                ex.printStackTrace();
+            }
+
         }
         @Override
         protected void onPostExecute(String str) {
             Log.d("DemoApp", " str   " + str);
-            progressDialog.dismiss();
-           // spinner.setVisibility(View.GONE);
-            String pipeDelBillInfo = str;
-            String responseMessage="";
 
-          //  pipeDelBillInfo = "1|1|1|BED/TEMPLE/OLD TOWN 1:GARAGE CHOK,SAMANTRAPUR,NATHPUR,NUAGAON, BIJAY VIHAR, GANGOTRI NAGAR. : 11kv Feeder Maintenance - Time 03-DEC-2019 07:00 to 10:00;BEDsd/TEMPLE/OLD TOWN 1:GARAGE CHOK,SAMANTRAPUR,NATHPUR,NUAGAON, BIJAY VIHAR, GANGOTRI NAGAR. : 11kv Feeder Maintenance - Time 03-DEC-2019 07:00 to 10:00 ";
+            try {
+                progressDialog.dismiss();
+                // spinner.setVisibility(View.GONE);
+                String pipeDelBillInfo = str;
+                String responseMessage="";
 
 
-            String[] BillInfo = pipeDelBillInfo.split("[|]");
-            Log.d("DemoApp", " BillInfo[0]   " + pipeDelBillInfo);//authoriztion check
-            Log.d("DemoApp", " BillInfo[1]  " + BillInfo[1]);//authoriztion check
-            if(BillInfo[0].equals("0")){
-                androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(context);
-                alertDialogBuilder.setTitle("User Not Found");
-                alertDialogBuilder.setMessage("User Not Found")
-                        .setCancelable(false)
-                        .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        })
-                        .setNegativeButton("Back", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                if(Typeinfo.equals("qlinks")) {
-                                    Intent UserDashboard = new Intent(getApplicationContext(), QuicklinksDashboard.class);
-                                    startActivity(UserDashboard);
-                                    finish();
-                                }else{
+
+                if (GlobalVariable.outageModals.size()>0){
+                    Intent curblintent = new Intent(getApplicationContext(), OutageDetailActivity.class);
+        /*            Bundle parmtrDet = new Bundle();
+                   // parmtrDet.putString("pipeDelBillInfo", BillInfo[3]);
+
+                    parmtrDet.putString("Typeinfo", Typeinfo);
+                    parmtrDet.putString("consIDval", consIDval);
+                    parmtrDet.putString("conname", conname);
+                    curblintent.putExtras(parmtrDet);
+
+
+                    startActivity(curblintent);*/
+                    rv_outage.setVisibility(View.VISIBLE);
+                    strOutagedet.setVisibility(View.GONE);
+
+                    rv_outage.setLayoutManager(new LinearLayoutManager(OutageInfoActivity.this));
+                    outageDeatilsAdapter = new OutageDeatilsAdapter(OutageInfoActivity.this, GlobalVariable.outageModals);
+                    rv_outage.setAdapter(outageDeatilsAdapter);
+
+
+                    outageDeatilsAdapter.notifyDataSetChanged();
+
+
+
+                }
+                else {
+                    strOutagedet.setVisibility(View.VISIBLE);
+                    strOutagedet.setText(R.string.no_outage_found);
+                    rv_outage.setVisibility(View.GONE);
+
+                }
+
+                //  pipeDelBillInfo = "1|1|1|BED/TEMPLE/OLD TOWN 1:GARAGE CHOK,SAMANTRAPUR,NATHPUR,NUAGAON, BIJAY VIHAR, GANGOTRI NAGAR. : 11kv Feeder Maintenance - Time 03-DEC-2019 07:00 to 10:00;BEDsd/TEMPLE/OLD TOWN 1:GARAGE CHOK,SAMANTRAPUR,NATHPUR,NUAGAON, BIJAY VIHAR, GANGOTRI NAGAR. : 11kv Feeder Maintenance - Time 03-DEC-2019 07:00 to 10:00 ";
+
+
+               /* String[] BillInfo = pipeDelBillInfo.split("[|]");
+                Log.d("DemoApp", " BillInfo[0]   " + pipeDelBillInfo);//authoriztion check
+                Log.d("DemoApp", " BillInfo[1]  " + BillInfo[1]);//authoriztion check
+                if(BillInfo[0].equals("0")){
+                    androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(context);
+                    alertDialogBuilder.setTitle("User Not Found");
+                    alertDialogBuilder.setMessage("User Not Found")
+                            .setCancelable(false)
+                            .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            })
+                            .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+
                                     Intent UserDashboard = new Intent(getApplicationContext(), MainActivity.class);
                                     startActivity(UserDashboard);
                                     finish();
+
                                 }
-                            }
-                        });
-                // create alert dialog
-                androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
-                // show it
-                alertDialog.show();
-            }else if(BillInfo[1].equals("0")) {
-                androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(context);
-                alertDialogBuilder.setTitle("Report No Not Found");
-                alertDialogBuilder.setMessage("Report No Not Found")
-                        .setCancelable(false)
-                        .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        })
-                        .setNegativeButton("Back", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                if(Typeinfo.equals("qlinks")) {
-                                    Intent UserDashboard = new Intent(getApplicationContext(), QuicklinksDashboard.class);
-                                    startActivity(UserDashboard);
-                                    finish();
-                                }else{
+                            });
+                    // create alert dialog
+                    androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                    // show it
+                    alertDialog.show();
+                }else if(BillInfo[1].equals("0")) {
+                    androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(context);
+                    alertDialogBuilder.setTitle("Report No Not Found");
+                    alertDialogBuilder.setMessage("Report No Not Found")
+                            .setCancelable(false)
+                            .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            })
+                            .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+
                                     Intent UserDashboard = new Intent(getApplicationContext(), MainActivity.class);
                                     startActivity(UserDashboard);
                                     finish();
+
                                 }
-                            }
-                        });
-                // create alert dialog
-                androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
-                // show it
-                alertDialog.show();
-            }else if(BillInfo[2].equals("0")) {
+                            });
+                    // create alert dialog
+                    androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                    // show it
+                    alertDialog.show();
+                }else if(BillInfo[2].equals("0")) {
 
-                responseMessage=BillInfo[3];
+                    responseMessage=BillInfo[3];
 
-                /* disable on 040520 by Santi
+                *//* disable on 040520 by Santi
                 android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(context);
                 alertDialogBuilder.setTitle("Record Not Found");
                 alertDialogBuilder.setMessage("No Outage Details Found")
@@ -603,22 +737,34 @@ public class OutageInfoActivity extends AppCompatActivity {
                 android.support.v7.app.AlertDialog alertDialog = alertDialogBuilder.create();
                 // show it
                 alertDialog.show();
-*/
-                strOutagedet.setText(responseMessage);
-            }else if(BillInfo[2].equals("1")){
-                Log.d("DemoApp", " BillInfo[3]   " + BillInfo[3]);
-                Intent curblintent = new Intent(getApplicationContext(), OutageDetailActivity.class);
-                Bundle parmtrDet = new Bundle();
-                parmtrDet.putString("pipeDelBillInfo", BillInfo[3]);
-                parmtrDet.putString("Typeinfo", Typeinfo);
-                parmtrDet.putString("consIDval", consIDval);
-                parmtrDet.putString("conname", conname);
-                curblintent.putExtras(parmtrDet);
-                startActivity(curblintent);
-                finish();
+*//*
+
+                }else if(BillInfo[2].equals("1")){
+                    Log.d("DemoApp", " BillInfo[3]   " + BillInfo[3]);
+                    Intent curblintent = new Intent(getApplicationContext(), OutageDetailActivity.class);
+                    Bundle parmtrDet = new Bundle();
+                    parmtrDet.putString("pipeDelBillInfo", BillInfo[3]);
+                    parmtrDet.putString("Typeinfo", Typeinfo);
+                    parmtrDet.putString("consIDval", consIDval);
+                    parmtrDet.putString("conname", conname);
+                    curblintent.putExtras(parmtrDet);
+                    startActivity(curblintent);
+                    finish();
+                }*/
             }
+            catch (Exception ex){
+                ex.printStackTrace();
+            }
+
+
         }
     }
+    private static String getValue(String tag, Element element) {
+        NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
+        Node node = nodeList.item(0);
+        return node.getNodeValue();
+    }
+
    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 // Inflate the menu; this adds items to the action bar if it is present.
@@ -641,9 +787,9 @@ public class OutageInfoActivity extends AppCompatActivity {
             return true;
         } else if (id == R.id.action_user) { //back
             if(Typeinfo.equals("qlinks")) {
-                Intent i = new Intent(this,QuicklinksDashboard.class);
+              /*  Intent i = new Intent(this,QuicklinksDashboard.class);
                 this.startActivity(i);
-                finish();
+                finish();*/
             }else{
                 Intent i = new Intent(this,MainActivity.class);
                 this.startActivity(i);

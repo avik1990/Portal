@@ -55,6 +55,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.cesu.itcc05.consumeportal.modal.BannerModal;
 import com.cesu.itcc05.consumeportal.modal.ModalSection;
 import com.cesu.itcc05.consumeportal.modal.ModalStatics;
@@ -104,11 +105,27 @@ import static java.lang.System.in;
 
 public class MainActivity extends Activity implements
         AdapterView.OnItemSelectedListener, View.OnTouchListener {
+    private static ImageView strconsID;
+    private static Button strhint, btnsubmit;
+    private static ImageView stremail;
+    private static ImageView strMobno;
+    private static ImageView strstar1;
+    private static TextView strmobmsg, strSwVersion;
+    private static EditText strconsIDval;
+    private static EditText stremailval;
+    private static EditText strmobval;
+    private String consIDval = "";
+    private String emailval = "";
     private String mobval = "";
     private String imeinum = "";
+    public static final int RequestPermissionCode = 1;
+    public static final int WRITE_REQUEST_CODE = 1;
+    private String strpwd = "";
+    private String strrepwd = "";
     final Context context = this;
+    private int chkresponse = 1;
     private String AuthURL = null;
-    Button closePopupBtn;
+    Button showPopupBtn, closePopupBtn;
     TextView UpdateSwBtn;
     PopupWindow popupWindow;
     LinearLayout linearLayout1;
@@ -154,10 +171,6 @@ public class MainActivity extends Activity implements
     String mobno = "0";
     private TextView tv_bill_month_val, pay_amounts, tv_due;
     String spinnerId = "";
-    public final String WSDL_TARGET_NAMESPACE = "http://tempuri.org/";
-    public final String METHOD_NAME = "GetBannerDetail";
-    public final String SOAP_ACTION = "http://tempuri.org/GetBannerDetail";
-    public final String SOAP_ADDRESS = "http://122.185.188.231/TPCODLCONNECTSERVICE/TPCODLConnectService.asmx?WSDL";
     List<BannerModal> bannerModals = new ArrayList<BannerModal>();
     private ProgressDialog progressDialog;
     List<OfferSchemModal> offerSchemModals = new ArrayList<OfferSchemModal>();
@@ -167,6 +180,7 @@ public class MainActivity extends Activity implements
     float dY;
     int lastAction;
     FrameLayout frame_layout;
+    LottieAnimationView animation_view;
 
     private static final String[] REQUIRED_SDK_PERMISSIONS = new String[]{
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -198,8 +212,11 @@ public class MainActivity extends Activity implements
     private String CANumberPay = "";
     private String emailPay = "";
     private TextView tv_my_Account;
-    String version = "";
-    ImageView iv_ca_drop;
+    private String version = "";
+    private ImageView iv_ca_drop;
+    private CardView cardview_apply;
+    private boolean fromDropDown = false;
+    private boolean dashBoardClick = false;
     View dragView;
 
     @Override
@@ -209,8 +226,25 @@ public class MainActivity extends Activity implements
         setContentView(R.layout.activity_main);
 
         dragView = findViewById(R.id.fab);
-        dragView.setOnTouchListener(this);
         frame_layout = findViewById(R.id.frame_layout);
+        dragView.setOnTouchListener(this);
+        animation_view = findViewById(R.id.animation_view);
+
+        animation_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                insertHit("Chat");
+                dashBoardClick = true;
+                Intent i = new Intent(context, ChatActivity.class);
+                i.putExtra("CA", conIds);
+                i.putExtra("CONSUMER_NO", conid);
+                i.putExtra("MOBILE_NO", mobno);
+                i.putExtra("CONSUMER_NAME", conName);
+                i.putExtra("SCHEMES_ARRAY", new Gson().toJson(listSchemes));
+                startActivity(i);
+            }
+        });
+
         iv_ca_drop = findViewById(R.id.iv_ca_drop);
         cardview_outage = findViewById(R.id.cardview_outage);
         //  card_payment=findViewById(R.id.card_payment);
@@ -239,6 +273,9 @@ public class MainActivity extends Activity implements
         tv_number = findViewById(R.id.tv_number);
         tv_my_Account = findViewById(R.id.tv_my_Account);
         layout = findViewById(R.id.layout);
+        cardview_apply = findViewById(R.id.cardview_apply);
+        fromDropDown = false;
+        dashBoardClick = false;
 
         //Toast.makeText(context, "Select Position" + CommonMethods.getSelectedPosition(context), Toast.LENGTH_SHORT).show();
 
@@ -273,7 +310,6 @@ public class MainActivity extends Activity implements
 
 
         iv_image.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 final String[] listItem = {"English", "हिन्दी", "ଓଡିଆ"};
@@ -282,6 +318,7 @@ public class MainActivity extends Activity implements
                 mBuilder.setSingleChoiceItems(listItem, -1, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
+
                         if (i == 0) {
                             setLocale("en");
                             language.setText("ENG");
@@ -297,11 +334,15 @@ public class MainActivity extends Activity implements
                         }
                         dialog.dismiss();
                     }
+
+
                 });
                 AlertDialog mDialog = mBuilder.create();
                 mDialog.show();
 
             }
+
+
         });
 
 
@@ -324,12 +365,24 @@ public class MainActivity extends Activity implements
         }
 
 
-        /*frame_layout.setOnClickListener(new View.OnClickListener() {
+    /*    fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dashBoardClick=true;
 
                 insertHit("Chat");
-
+                *//*if (conIds.size() > 0) {
+                    Intent i = new Intent(context, ChatActivity.class);
+                    i.putExtra("CA", conIds);
+                    i.putExtra("CONSUMER_NO", conid);
+                    i.putExtra("MOBILE_NO", mobno);
+                    i.putExtra("CONSUMER_NAME", conName);
+                    i.putExtra("SCHEMES_ARRAY", new Gson().toJson(listSchemes));
+                    startActivity(i);
+                }
+                else {
+                    Toast.makeText(MainActivity.this,"Please login first to initiate chat",Toast.LENGTH_SHORT).show();
+                }*//*
                 Intent i = new Intent(context, ChatActivity.class);
                 i.putExtra("CA", conIds);
                 i.putExtra("CONSUMER_NO", conid);
@@ -340,39 +393,41 @@ public class MainActivity extends Activity implements
             }
         });*/
 
+        try{
+            databaseAccess.open();
+            strSelectSQL_01 = null;
+            cursor = null;
+            strSelectSQL_01 = "SELECT TILES_NAME,CLICK_DATE,CLICK_TIME " +
+                    "FROM STATISTICS_DATA";
+            cursor = DatabaseAccess.database.rawQuery(strSelectSQL_01, null);
+            Log.d("DemoApp", "Query SQL " + strSelectSQL_01);
 
-        databaseAccess.open();
-        strSelectSQL_01 = null;
-        cursor = null;
-        strSelectSQL_01 = "SELECT TILES_NAME,CLICK_DATE,CLICK_TIME " +
-                "FROM STATISTICS_DATA";
-        cursor = DatabaseAccess.database.rawQuery(strSelectSQL_01, null);
-        Log.d("DemoApp", "Query SQL " + strSelectSQL_01);
+            while (cursor.moveToNext()) {
+                tilesName = cursor.getString(0);
+                clickData = cursor.getString(1);
+                clickTime = cursor.getString(2);
 
-        while (cursor.moveToNext()) {
-            tilesName = cursor.getString(0);
-            clickData = cursor.getString(1);
-            clickTime = cursor.getString(2);
+                ModalStatics modalStatics = new ModalStatics();
+                modalStatics.setTileName(tilesName);
+                modalStatics.setClickDate(clickData);
+                modalStatics.setClickTime(clickTime);
+                modStaics.add(modalStatics);
 
-            ModalStatics modalStatics = new ModalStatics();
-            modalStatics.setTileName(tilesName);
-            modalStatics.setClickDate(clickData);
-            modalStatics.setClickTime(clickTime);
-            modStaics.add(modalStatics);
+                Log.d("DemoApp", "in Loop conid" + tilesName + clickData + clickTime);
+            }
+            cursor.close();
+            databaseAccess.close();
+        }catch(Exception e){}
 
-            Log.d("DemoApp", "in Loop conid" + tilesName + clickData + clickTime);
-        }
-        cursor.close();
-        databaseAccess.close();
+
 
 
         ArrayAdapter aa = new ArrayAdapter(this, R.layout.spinner_item, conIds);
         aa.setDropDownViewResource(R.layout.spinner_item);
         //Setting the ArrayAdapter data on the Spinner
-        spinner_ca.setAdapter(aa);
-        spinner_ca.setOnItemSelectedListener(this);
-
         if (conIds.size() > 0) {
+            spinner_ca.setAdapter(aa);
+            spinner_ca.setOnItemSelectedListener(this);
             if (!CommonMethods.getSelectedPosition(context).isEmpty()) {
                 spinner_ca.setSelection(Integer.parseInt(CommonMethods.getSelectedPosition(context)));
             }
@@ -409,6 +464,7 @@ public class MainActivity extends Activity implements
         btn_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dashBoardClick = true;
                 Intent QDashboard = new Intent(getApplicationContext(), InstantPaymentActivity.class);
                 QDashboard.putExtra("ca", "");
                 QDashboard.putExtra("mob", "");
@@ -419,10 +475,22 @@ public class MainActivity extends Activity implements
                 insertHit("Pay");
             }
         });
+
+        cardview_apply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dashBoardClick = true;
+                Intent QDashboard = new Intent(getApplicationContext(), LandingActivityConnection.class);
+                startActivity(QDashboard);
+                insertHit("New_Connection");
+            }
+        });
+
         cl_pay_amount.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
+                dashBoardClick = true;
 
                 if (mobileNumberPay == null) {
                     mobileNumberPay = "";
@@ -446,6 +514,7 @@ public class MainActivity extends Activity implements
         cardview_offer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dashBoardClick = true;
 
                 offerSchemModals.clear();
                 offerSchemModals.addAll(GlobalVariable.offerSchemModals);
@@ -461,6 +530,7 @@ public class MainActivity extends Activity implements
         payment_cen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dashBoardClick = true;
                 Intent QDashboard = new Intent(getApplicationContext(), PaymentCentreActivity.class);
                 startActivity(QDashboard);
                 insertHit("Offices");
@@ -470,6 +540,7 @@ public class MainActivity extends Activity implements
         cardview_about_us.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dashBoardClick = true;
                 Intent QDashboard = new Intent(getApplicationContext(), AboutUsActivity.class);
                 startActivity(QDashboard);
                 insertHit("AboutUs");
@@ -479,6 +550,7 @@ public class MainActivity extends Activity implements
         cardview_document.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dashBoardClick = true;
                 Intent QDashboard = new Intent(getApplicationContext(), DocumentActivity.class);
                 startActivity(QDashboard);
                 insertHit("Document");
@@ -497,6 +569,7 @@ public class MainActivity extends Activity implements
         card_register_complain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dashBoardClick = true;
                 Intent intent = new Intent(getApplicationContext(), ComplaintLoginActivity.class);
                 startActivity(intent);
                 insertHit("ComplainRegister");
@@ -506,6 +579,7 @@ public class MainActivity extends Activity implements
         cardview_outage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dashBoardClick = true;
                 Intent curblintent = new Intent(getApplicationContext(), OutageInfoActivity.class);
                 Bundle reqDet = new Bundle();
                 reqDet.putString("Typeinfo", "qlinks");
@@ -519,6 +593,7 @@ public class MainActivity extends Activity implements
         cardview_register_theft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dashBoardClick = true;
                 Intent intent = new Intent(getApplicationContext(), TheftRegisterActivity.class);
                 startActivity(intent);
                 insertHit("Theft");
@@ -528,6 +603,7 @@ public class MainActivity extends Activity implements
         cardview_safety.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dashBoardClick = true;
                 Intent intent = new Intent(getApplicationContext(), SafetyActivity.class);
                 startActivity(intent);
                 insertHit("Safety");
@@ -536,6 +612,7 @@ public class MainActivity extends Activity implements
         cardview_employee_verify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dashBoardClick = true;
                 Intent intent = new Intent(getApplicationContext(), EmployeeVerificationActivity.class);
                 startActivity(intent);
                 insertHit("VerifyEmp");
@@ -545,6 +622,7 @@ public class MainActivity extends Activity implements
         cardview_feedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dashBoardClick = true;
                 Intent intent = new Intent(getApplicationContext(), FeedBackActivity.class);
                 startActivity(intent);
                 insertHit("Feedback");
@@ -553,12 +631,17 @@ public class MainActivity extends Activity implements
         card_my_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dashBoardClick = true;
                 Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(intent);
                 insertHit("MyAcoount");
 
             }
         });
+
+        try{
+            insertHit("MAIN-V2.1");
+        }catch (Exception e){}
 
 
     }
@@ -608,6 +691,7 @@ public class MainActivity extends Activity implements
     public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
         // Toast.makeText(getApplicationContext(),country[position] , Toast.LENGTH_LONG).show();
         CommonMethods.saveSelectedPosition(context, "" + position);
+
         spinnerId = conIds.get(position);
 
         //position
@@ -616,7 +700,9 @@ public class MainActivity extends Activity implements
         if (!conid.equals("x")) {
 
             if (CommonMethods.isNetworkAvailable(MainActivity.this)) {
+                fromDropDown = true;
                 fetchInformation();
+
             } else {
                 Toast.makeText(MainActivity.this, "No intenet connection,please connect to internet", Toast.LENGTH_SHORT).show();
             }
@@ -637,8 +723,8 @@ public class MainActivity extends Activity implements
                 dX = dragView.getX() - event.getRawX();
                 dY = dragView.getY() - event.getRawY();
                 lastAction = MotionEvent.ACTION_DOWN;
-                break;
-
+                //break;
+                return true;
             case MotionEvent.ACTION_MOVE:
                 dragView.setY(event.getRawY() + dY);
                 dragView.setX(event.getRawX() + dX);
@@ -649,8 +735,8 @@ public class MainActivity extends Activity implements
                 if (lastAction == MotionEvent.ACTION_DOWN) {
                     try {
                         insertHit("Chat");
-                    } catch (Exception e) {
-                    }
+                    }catch (Exception e){}
+                    dashBoardClick = true;
                     Intent i = new Intent(context, ChatActivity.class);
                     i.putExtra("CA", conIds);
                     i.putExtra("CONSUMER_NO", conid);
@@ -659,11 +745,12 @@ public class MainActivity extends Activity implements
                     i.putExtra("SCHEMES_ARRAY", new Gson().toJson(listSchemes));
                     startActivity(i);
                 }
-                break;
+                return true;
 
             default:
                 return false;
         }
+        layout.invalidate();
         return true;
     }
 
@@ -672,53 +759,59 @@ public class MainActivity extends Activity implements
 
         @Override
         protected String doInBackground(String... params) {
-            //activity = (MainActivity)params[0];
-            String strURL = params[0];
-
-            URLConnection conn = null;
-            InputStream inputStreamer = null;
             String bodycontent = null;
-            Log.d("DemoApp", " strURL   " + strURL);
             try {
+                String strURL = params[0];
 
-                URL url = new URL(strURL);
-                URLConnection uc = url.openConnection();
-                uc.setDoInput(true);
-                BufferedReader in = new BufferedReader(new InputStreamReader(uc.getInputStream()));
-                String inputLine;
-                StringBuilder a = new StringBuilder();
-                while ((inputLine = in.readLine()) != null)
-                    a.append(inputLine);
-                in.close();
-                Log.d("DemoApp", " fullString   " + a.toString());
-                String html = a.toString();
-                int start = html.indexOf("<body>") + "<body>".length();
-                int end = html.indexOf("</body>", start);
-                bodycontent = html.substring(start, end);
-                Log.d("DemoApp", " start   " + start);
-                Log.d("DemoApp", " end   " + end);
-                Log.d("DemoApp", " body   " + bodycontent);
-            } catch (Exception e) {
-                e.printStackTrace();
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                alertDialogBuilder.setTitle("Not Connectd to Server");
-                alertDialogBuilder.setMessage("Please Retry")
-                        .setCancelable(false)
-                        .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                // show it
-                alertDialog.show();
+                URLConnection conn = null;
+                InputStream inputStreamer = null;
+
+                Log.d("DemoApp", " strURL   " + strURL);
+                try {
+
+                    URL url = new URL(strURL);
+                    URLConnection uc = url.openConnection();
+                    uc.setDoInput(true);
+                    BufferedReader in = new BufferedReader(new InputStreamReader(uc.getInputStream()));
+                    String inputLine;
+                    StringBuilder a = new StringBuilder();
+                    while ((inputLine = in.readLine()) != null)
+                        a.append(inputLine);
+                    in.close();
+                    Log.d("DemoApp", " fullString   " + a.toString());
+                    String html = a.toString();
+                    int start = html.indexOf("<body>") + "<body>".length();
+                    int end = html.indexOf("</body>", start);
+                    bodycontent = html.substring(start, end);
+                    Log.d("DemoApp", " start   " + start);
+                    Log.d("DemoApp", " end   " + end);
+                    Log.d("DemoApp", " body   " + bodycontent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                    alertDialogBuilder.setTitle("Not Connectd to Server");
+                    alertDialogBuilder.setMessage("Please Retry")
+                            .setCancelable(false)
+                            .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                    // create alert dialog
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    // show it
+                    alertDialog.show();
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
+            //activity = (MainActivity)params[0];
+
 
             return bodycontent;
         }
@@ -729,6 +822,11 @@ public class MainActivity extends Activity implements
             ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
             if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
+
+                if ((fromDropDown) && (!dashBoardClick)) {
+                    progressDialog = ProgressDialog.show(MainActivity.this, "Fetching Data", "Please Wait:: connecting to server");
+                }
+
                 //  progressDialog = ProgressDialog.show(InstantPaymentActivity.this, " ", " ");
                 //spinner.setVisibility(View.VISIBLE);
             } else {
@@ -755,77 +853,86 @@ public class MainActivity extends Activity implements
 
         @Override
         protected void onPostExecute(String str) {
-            Log.d("DemoApp", " str   " + str);
-            //  progressDialog.dismiss();
-            //spinner.setVisibility(View.GONE);
-            String pipeDelBillInfo = str;
-            // pipeDelBillInfo="1|10|santirnja|102S34343|1000|12-09-2019|580|03-08-2019|2555"; //curbill
+            try {
+
+                if ((fromDropDown) && (!dashBoardClick)) {
+                    progressDialog.dismiss();
+                }
+                fromDropDown = false;
+                dashBoardClick = false;
 
 
-            String[] BillInfo = pipeDelBillInfo.split("[|]");
-            // Log.d("DemoApp", " BillInfo[0]   " +pipeDelBillInfo);//authoriztion check
-            // Log.d("DemoApp", " BillInfo[2]   " +pipeDelBillInfo);//authoriztion check
-            if (BillInfo[0].equals("0")) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                alertDialogBuilder.setTitle("User Not Found");
-                alertDialogBuilder.setMessage("User Not Found")
-                        .setCancelable(false)
-                        .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                // show it
-                alertDialog.show();
-                Log.d("DemoApp", "[4]   ");
-            } else if (BillInfo[1].equals("0")) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                alertDialogBuilder.setTitle("IP Address Not Found");
-                alertDialogBuilder.setMessage("IP Address Not Found")
-                        .setCancelable(false)
-                        .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                // show it
-                alertDialog.show();
-                Log.d("DemoApp", "[4]   ");
-            } else if (BillInfo[2].equals("0")) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                alertDialogBuilder.setTitle("Consumer Not Found");
-                alertDialogBuilder.setMessage("Consumer Not Found")
-                        .setCancelable(false)
-                        .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                // show it
-                alertDialog.show();
-                Log.d("DemoApp", "[4]   ");
-            }/*else if(BillInfo[3].equals("0")){
+                Log.d("DemoApp", " str   " + str);
+                //  progressDialog.dismiss();
+                //spinner.setVisibility(View.GONE);
+                String pipeDelBillInfo = str;
+                // pipeDelBillInfo="1|10|santirnja|102S34343|1000|12-09-2019|580|03-08-2019|2555"; //curbill
+
+
+                String[] BillInfo = pipeDelBillInfo.split("[|]");
+                // Log.d("DemoApp", " BillInfo[0]   " +pipeDelBillInfo);//authoriztion check
+                // Log.d("DemoApp", " BillInfo[2]   " +pipeDelBillInfo);//authoriztion check
+                if (BillInfo[0].equals("0")) {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                    alertDialogBuilder.setTitle("User Not Found");
+                    alertDialogBuilder.setMessage("User Not Found")
+                            .setCancelable(false)
+                            .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                    // create alert dialog
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    // show it
+                    alertDialog.show();
+                    Log.d("DemoApp", "[4]   ");
+                } else if (BillInfo[1].equals("0")) {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                    alertDialogBuilder.setTitle("IP Address Not Found");
+                    alertDialogBuilder.setMessage("IP Address Not Found")
+                            .setCancelable(false)
+                            .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                    // create alert dialog
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    // show it
+                    alertDialog.show();
+                    Log.d("DemoApp", "[4]   ");
+                } else if (BillInfo[2].equals("0")) {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                    alertDialogBuilder.setTitle("Consumer Not Found");
+                    alertDialogBuilder.setMessage("Consumer Not Found")
+                            .setCancelable(false)
+                            .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                    // create alert dialog
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    // show it
+                    alertDialog.show();
+                    Log.d("DemoApp", "[4]   ");
+                }/*else if(BillInfo[3].equals("0")){
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
                 alertDialogBuilder.setTitle("Current Bill Not Found");
                 alertDialogBuilder.setMessage("Current Bill Not Found")
@@ -848,84 +955,84 @@ public class MainActivity extends Activity implements
                 Log.d("DemoApp", "[4]   ") ;
             }*/ else {//curbill
 
-                String stroffcode = "";
-                stroffcode = BillInfo[21];
-                Log.d("DemoApp", "[4]   ");
-                if (BillInfo[22].equals("1")) {
-                    stroffcode = stroffcode + "S";
-                } else {
-                    stroffcode = stroffcode + "I";
-                }
-                Log.d("DemoApp", "BillInfo[22]  " + BillInfo[22]);
-                //   strName.setText(BillInfo[8] + " (" + stroffcode + BillInfo[7] + ")");
-                //strconid.setText(BillInfo[7]);
-
-                int bltotal = 0;
-                int payamt = 0;
-                int arrear = 0;
-                bltotal = (int) (Double.parseDouble(BillInfo[25]));
-                payamt = (int) (Double.parseDouble(BillInfo[12]));
-                arrear = (int) (Double.parseDouble(BillInfo[28]));
-                bltotal = Math.round(bltotal);
-                payamt = Math.round(payamt);
-                arrear = Math.round(arrear);
-                int minpay;
-                if (payamt >= bltotal) {
-                    if (arrear <= 0) {
-                        minpay = payamt;
+                    String stroffcode = "";
+                    stroffcode = BillInfo[21];
+                    Log.d("DemoApp", "[4]   ");
+                    if (BillInfo[22].equals("1")) {
+                        stroffcode = stroffcode + "S";
                     } else {
-                        // minpay=payamt-Math.round((arrear/1)); change by santi 17/04/20
+                        stroffcode = stroffcode + "I";
+                    }
+                    Log.d("DemoApp", "BillInfo[22]  " + BillInfo[22]);
+                    //   strName.setText(BillInfo[8] + " (" + stroffcode + BillInfo[7] + ")");
+                    //strconid.setText(BillInfo[7]);
+
+                    int bltotal = 0;
+                    int payamt = 0;
+                    int arrear = 0;
+                    bltotal = (int) (Double.parseDouble(BillInfo[25]));
+                    payamt = (int) (Double.parseDouble(BillInfo[12]));
+                    arrear = (int) (Double.parseDouble(BillInfo[28]));
+                    bltotal = Math.round(bltotal);
+                    payamt = Math.round(payamt);
+                    arrear = Math.round(arrear);
+                    int minpay;
+                    if (payamt >= bltotal) {
+                        if (arrear <= 0) {
+                            minpay = payamt;
+                        } else {
+                            // minpay=payamt-Math.round((arrear/1)); change by santi 17/04/20
+                            minpay = payamt;
+                        }
+                    } else {
                         minpay = payamt;
                     }
-                } else {
                     minpay = payamt;
-                }
-                minpay = payamt;
                /* strminpay.setText(Integer.toString(minpay));
                 strPayamount.setText(BillInfo[12]);//*/
 
 
-                if (BillInfo[12] != null) {
-                    pay_amounts.setText(BillInfo[12]);
-                } else {
-                    pay_amounts.setText("");
+                    if (BillInfo[12] != null) {
+                        pay_amounts.setText(BillInfo[12]);
+                    } else {
+                        pay_amounts.setText("");
 
-                }
-                // strPayAmt.setText(BillInfo[12]);
-                //Modify on 040520 by Santi
-                // strPayAmt.setTextIsSelectable(true); //disable on 040520 by Santi
-                // strPayAmt.setFocusable(true);//disable on 040520 by Santi
-                // strPayAmt.setFocusableInTouchMode(true);//disable on 040520 by Santi
-                // strPayAmt.setClickable(true);//disable on 040520 by Santi
-                // strPayAmt.setLongClickable(true);//disable on 040520 by Santi
-                //End////
+                    }
+                    // strPayAmt.setText(BillInfo[12]);
+                    //Modify on 040520 by Santi
+                    // strPayAmt.setTextIsSelectable(true); //disable on 040520 by Santi
+                    // strPayAmt.setFocusable(true);//disable on 040520 by Santi
+                    // strPayAmt.setFocusableInTouchMode(true);//disable on 040520 by Santi
+                    // strPayAmt.setClickable(true);//disable on 040520 by Santi
+                    // strPayAmt.setLongClickable(true);//disable on 040520 by Santi
+                    //End////
                /* strcbill.setText(BillInfo[27]);//current bill
                 strarrear.setText(BillInfo[28]);
                 strbdate.setText(BillInfo[16]);
                 strdudt.setText(BillInfo[17]);
                 strrbt.setText(BillInfo[26]);*/
 
-                if (BillInfo[17] != null) {
-                    tv_due.setText(BillInfo[17]);
-                } else {
-                    tv_due.setText("");
-                }
-                if (BillInfo[16] != null) {
-                    tv_bill_month_val.setText(BillInfo[16]);
-                } else {
-                    tv_bill_month_val.setText("");
+                    if (BillInfo[17] != null) {
+                        tv_due.setText(BillInfo[17]);
+                    } else {
+                        tv_due.setText("");
+                    }
+                    if (BillInfo[16] != null) {
+                        tv_bill_month_val.setText(BillInfo[16]);
+                    } else {
+                        tv_bill_month_val.setText("");
 
-                }
-                if (BillInfo[8] != null) {
+                    }
+                    if (BillInfo[8] != null) {
 
-                    tv_name.setText(BillInfo[8]);
-                } else {
-                    tv_name.setText("");
+                        tv_name.setText(BillInfo[8]);
+                    } else {
+                        tv_name.setText("");
 
-                }
+                    }
 
 
-                //strpmt.setText(BillInfo[23]);
+                    //strpmt.setText(BillInfo[23]);
               /*  strpmt.setText(BillInfo[29]);//Added on 040520 by santi
                 if(BillInfo[24]==null || BillInfo[24].equals("") || BillInfo[24].equals(" ") || BillInfo[24].equals("-")){
                     strpmtdt.setText("-");
@@ -953,6 +1060,9 @@ public class MainActivity extends Activity implements
                     payBtn.setClickable(true);
                 }*/
 
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
         }
     }
@@ -1068,38 +1178,44 @@ public class MainActivity extends Activity implements
 
         @Override
         protected void onPostExecute(String str) {
-            Log.d("DemoApp", " str   " + str);
-            progressDialog.dismiss();
 
-            setBanner();
-            currentDate = getCurrentDateAndTime();
+            try {
+                Log.d("DemoApp", " str   " + str);
+                progressDialog.dismiss();
 
-            System.out.println("zsdfgh==" + currentDate);
-            currentTimeHour = getCurrentHour();
-            Date currentDates = getDateFromString(currentDate);
-            Date dbDate = null;
-            for (int i = 0; i < modStaics.size(); i++) {
+                setBanner();
+                currentDate = getCurrentDateAndTime();
 
-                dbDate = getDateFromString(modStaics.get(i).getClickDate());
+                System.out.println("zsdfgh==" + currentDate);
+                currentTimeHour = getCurrentHour();
+                Date currentDates = getDateFromString(currentDate);
+                Date dbDate = null;
+                for (int i = 0; i < modStaics.size(); i++) {
 
-                if (currentDates.after(dbDate)) {
+                    dbDate = getDateFromString(modStaics.get(i).getClickDate());
 
-                    String url = "http://122.185.188.231/TPCODLCONNECTSERVICE/TPCODLConnectService.asmx/Add_App_STATISTICS?checksum=" + "01091981" + "&TILE_NAME=" + modStaics.get(i).getTileName() + "&LOG_DATE=" + modStaics.get(i).getClickDate() + "&LOG_HOUR=" + modStaics.get(i).getClickTime();
-
-
-                    new sendStatisticData().execute(url, modStaics.get(i).getTileName(), modStaics.get(i).getClickDate(), modStaics.get(i).getClickTime());
-                    // upload will call
-                } else if (currentDates.equals(dbDate)) {
-
-                    if (Integer.parseInt(currentTimeHour) > Integer.parseInt(modStaics.get(i).getClickTime())) {
+                    if (currentDates.after(dbDate)) {
 
                         String url = "http://122.185.188.231/TPCODLCONNECTSERVICE/TPCODLConnectService.asmx/Add_App_STATISTICS?checksum=" + "01091981" + "&TILE_NAME=" + modStaics.get(i).getTileName() + "&LOG_DATE=" + modStaics.get(i).getClickDate() + "&LOG_HOUR=" + modStaics.get(i).getClickTime();
 
-                        new sendStatisticData().execute(url, modStaics.get(i).getTileName(), modStaics.get(i).getClickDate(), modStaics.get(i).getClickTime());
-                    }
-                }
 
+                        new sendStatisticData().execute(url, modStaics.get(i).getTileName(), modStaics.get(i).getClickDate(), modStaics.get(i).getClickTime());
+                        // upload will call
+                    } else if (currentDates.equals(dbDate)) {
+
+                        if (Integer.parseInt(currentTimeHour) > Integer.parseInt(modStaics.get(i).getClickTime())) {
+
+                            String url = "http://122.185.188.231/TPCODLCONNECTSERVICE/TPCODLConnectService.asmx/Add_App_STATISTICS?checksum=" + "01091981" + "&TILE_NAME=" + modStaics.get(i).getTileName() + "&LOG_DATE=" + modStaics.get(i).getClickDate() + "&LOG_HOUR=" + modStaics.get(i).getClickTime();
+
+                            new sendStatisticData().execute(url, modStaics.get(i).getTileName(), modStaics.get(i).getClickDate(), modStaics.get(i).getClickTime());
+                        }
+                    }
+
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
+
 
         }
 
@@ -1176,36 +1292,40 @@ public class MainActivity extends Activity implements
 
         @Override
         protected void onPostExecute(String str) {
+
+            try {
+                if ((version != null) || (version.equalsIgnoreCase(""))) {
+
+                    if (!(CommonMethods.getRemoteVersionNumber(MainActivity.this).equalsIgnoreCase(version))) {
+                        LayoutInflater layoutInflater = (LayoutInflater) MainActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        View customView = layoutInflater.inflate(R.layout.activity_popup, null);
+                        closePopupBtn = (Button) customView.findViewById(R.id.closePopupBtn);
+                        UpdateSwBtn = (TextView) customView.findViewById(R.id.UpdateSwBtn);
+                        //instantiate popup window
+                        popupWindow = new PopupWindow(customView, GridLayout.LayoutParams.WRAP_CONTENT, GridLayout.LayoutParams.WRAP_CONTENT);
+                        //display the popup window
+                        popupWindow.showAtLocation(layout, Gravity.CENTER, 0, 0);
+                        //close the popup window on button click
+                        UpdateSwBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getAppLink(getApplicationContext()))));
+                                popupWindow.dismiss();
+                            }
+                        });
+                        closePopupBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                popupWindow.dismiss();
+                            }
+                        });
+                    }
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
             Log.d("DemoApp", " str   " + str);
             //   progressDialog.dismiss();
-
-            if ((version != null) || (version.equalsIgnoreCase(""))) {
-
-                if (!(CommonMethods.getRemoteVersionNumber(MainActivity.this).equalsIgnoreCase(version))) {
-                    LayoutInflater layoutInflater = (LayoutInflater) MainActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    View customView = layoutInflater.inflate(R.layout.activity_popup, null);
-                    closePopupBtn = (Button) customView.findViewById(R.id.closePopupBtn);
-                    UpdateSwBtn = (TextView) customView.findViewById(R.id.UpdateSwBtn);
-                    //instantiate popup window
-                    popupWindow = new PopupWindow(customView, GridLayout.LayoutParams.WRAP_CONTENT, GridLayout.LayoutParams.WRAP_CONTENT);
-                    //display the popup window
-                    popupWindow.showAtLocation(layout, Gravity.CENTER, 0, 0);
-                    //close the popup window on button click
-                    UpdateSwBtn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getAppLink(getApplicationContext()))));
-                            popupWindow.dismiss();
-                        }
-                    });
-                    closePopupBtn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            popupWindow.dismiss();
-                        }
-                    });
-                }
-            }
 
 
             //fetChImage(empId);
@@ -1371,7 +1491,7 @@ public class MainActivity extends Activity implements
     protected void onResume() {
         super.onResume();
         //loadLocale();
-        //  checkSync();  // version control
+        checkSync();  // version control
 
         getLoginUser();
 
@@ -1490,22 +1610,7 @@ public class MainActivity extends Activity implements
             try {
                 URL url = null;
                 url = new URL(strURL);
-                URLConnection uc = url.openConnection();
-                uc.setDoInput(true);
-                BufferedReader in = null;
-                in = new BufferedReader(new InputStreamReader(uc.getInputStream()));
-                String inputLine = "";
-                String inputLine1 = "";
-                StringBuilder a = new StringBuilder();
-                Log.d("DemoApp", " a size   " + a.length());
-                while ((inputLine = in.readLine()) != null) {
-                    a.append(inputLine);
-                    inputLine1 = inputLine;
-                    //  Log.d("DemoApp", " input line " + a.toString());
-                }
-                in.close();
 
-                Log.d("DemoApp", " fullString   " + a.toString());
 
                 DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
                 DocumentBuilder db = dbf.newDocumentBuilder();
@@ -1551,7 +1656,7 @@ public class MainActivity extends Activity implements
 
         @Override
         protected void onPostExecute(String str) {
-            Log.d("DemoApp", " str   " + str);
+
 
             // fetChImage(empId);
         }

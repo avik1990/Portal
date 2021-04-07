@@ -442,9 +442,7 @@ public class ComplaintStatusActivity extends AppCompatActivity {
             return true;
         } else if (id == R.id.action_user) { //back
             if(compinfo.equals("new")) {
-                Intent i = new Intent(this,QuicklinksDashboard.class);
-                this.startActivity(i);
-                finish();
+
             }else{
                 Intent i = new Intent(this,ComplaintDashboardActivity.class);
                 this.startActivity(i);

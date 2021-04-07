@@ -119,7 +119,7 @@ public class FeedBackActivity extends AppCompatActivity {
 
             HttpTransportSE androidHttpTransport = new HttpTransportSE(
                     SOAP_ADDRESS);
-            try {
+           /* try {
                 androidHttpTransport.call(SOAP_ACTION,envelope);
             }
             catch (IOException ex){
@@ -128,7 +128,7 @@ public class FeedBackActivity extends AppCompatActivity {
             catch (XmlPullParserException ex){
                 ex.printStackTrace();
             }
-
+*/
             SoapObject response = null;
             try {
 

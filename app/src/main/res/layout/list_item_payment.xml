@@ -75,7 +75,7 @@
                 android:id="@+id/ivLocation"
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
-                android:src="@drawable/ic_location"
+                android:src="@drawable/pin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_id_value" />
         </androidx.constraintlayout.widget.ConstraintLayout>

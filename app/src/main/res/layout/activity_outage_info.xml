@@ -5,20 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar"
-        android:visibility="gone"></include>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:background="@color/White">
 
             <ImageView
@@ -26,9 +20,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/_5sdp"
-                android:paddingTop="@dimen/_15sdp"
                 android:paddingEnd="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:src="@drawable/ic_baseline_chevron_left_24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/cl_cons" />
@@ -38,50 +32,12 @@
                 android:layout_width="0dp"
                 android:layout_height="70dp"
                 android:background="@drawable/logo_new"
-                android:padding="10dp"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/iv_backs"
                 app:layout_constraintTop_toTopOf="parent">
 
 
-                <!--          <ImageView
-                              android:id="@+id/iv_image"
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:src="@drawable/verify"
-                              app:layout_constraintStart_toStartOf="parent"
-                              app:layout_constraintEnd_toEndOf="parent"
-                              app:layout_constraintTop_toTopOf="parent"
-                              android:layout_marginTop="10dp"
-                              >
-                          </ImageView>
-                          <TextView
-                              android:id="@+id/tv_outage"
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:text="Outage Details"
-                              app:layout_constraintTop_toBottomOf="@+id/iv_image"
-                              app:layout_constraintStart_toStartOf="parent"
-                              app:layout_constraintEnd_toEndOf="parent"
-                              android:textColor="@color/White"
-                              android:textSize="16sp"
-                              android:layout_marginTop="5dp"
-                              />
-                          <TextView
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              app:layout_constraintTop_toBottomOf="@+id/tv_outage"
-                              app:layout_constraintStart_toStartOf="parent"
-                              app:layout_constraintEnd_toEndOf="parent"
-                              android:text="Please Enter/Select CA number"
-                              android:textColor="@color/White"
-                              android:singleLine="true"
-                              android:imeOptions="actionDone"
-                              android:layout_marginTop="5dp"
-                              >
-
-                          </TextView>-->
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -182,7 +138,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cl_ca">
-
             </TextView>
 
             <CheckBox
@@ -190,7 +145,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:checked="true"
                 android:text="@string/agree_terms_amp_conditions"
                 app:layout_constraintStart_toStartOf="parent"
@@ -210,40 +165,80 @@
             </ImageView>
 
 
+
+
             <Button
                 android:id="@+id/submit"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/rectangular_shape_primary"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
                 android:text="@string/view_details"
+                android:visibility="visible"
                 android:textAllCaps="false"
                 android:textColor="@color/White"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btntrmscnd" />
+                app:layout_constraintTop_toBottomOf="@+id/tmcnd"
+                app:layout_goneMarginTop="@dimen/_10sdp"/>
 
-            <TextView
-                android:id="@+id/Outagedet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text=""
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="#c80909"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+            <View
+                android:id="@+id/vieww"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@+id/submit"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/submit" />
+                app:layout_goneMarginTop="@dimen/_10sdp"
+                android:background="@color/black"
+                android:layout_marginTop="@dimen/_5sdp"
+                />
+            <RelativeLayout
+                android:id="@+id/rl"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:visibility="visible"
+                app:layout_constraintTop_toBottomOf="@+id/vieww"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_margin="@dimen/_10sdp"
+                >
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_outage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    />
+                <TextView
+                    android:id="@+id/Outagedet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="#c80909"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                   android:layout_centerInParent="true"
+                    >
+
+                </TextView>
+
+            </RelativeLayout>
+
+
+               <!-- app:layout_constraintEnd_toEndOf="@+id/rv_outage"
+                app:layout_constraintStart_toStartOf="@+id/rv_outage"
+                app:layout_constraintBottom_toBottomOf="@+id/rv_outage"
+                app:layout_constraintTop_toTopOf="@+id/rv_outage" -->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </ScrollView>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout><!--<LinearLayout

@@ -96,6 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
     private String matchflg="0";
     private String StrvalidIpget="0";
     private String StrvalidIpgeturl="StrvalidIpgeturl";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -120,8 +120,7 @@ public class ComplaintStsDetailActivity extends AppCompatActivity {
             return true;
         } else if (id == R.id.action_user) { //back
             if(strcomptyp.equals("new")) {
-                Intent i = new Intent(this,QuicklinksDashboard.class);
-                this.startActivity(i);
+
                 finish();
             }else{
                 Intent i = new Intent(this,ComplaintDashboardActivity.class);

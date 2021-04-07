@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -74,11 +76,12 @@ public class CommonMethods {
     }
 
     public static String getPaymentUrl(String custId, String mobileNum, Context context) {
+
         String url = null;
         try {
-            url = getIp(context) + "ConsumerPortal/GetData?intOptionType=2&ConsumerID=" +
-                    getEncryptedString(Constants.secretKey, custId) + "&strMobileNo=" +
-                    getEncryptedString(Constants.secretKey, mobileNum) + "&isEncrypt=true";
+            url = getIp(context)+"ConsumerPortal/GetData?intOptionType=2&ConsumerID="+
+                    getEncryptedString(Constants.secretKey,custId)+"&strMobileNo="+
+                    getEncryptedString(Constants.secretKey,mobileNum)+"&isEncrypt=true&source=TPCODLMitra";
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (NoSuchPaddingException e) {
@@ -91,6 +94,7 @@ public class CommonMethods {
             e.printStackTrace();
         }
         return url;
+
     }
 
     /*http://portal1.tpcentralodisha.com:8080/*/
@@ -200,30 +204,23 @@ public class CommonMethods {
 
     @SuppressLint("NewApi")
     public static String readFileAsBase64String(String path) {
-        try {
-            InputStream is = new FileInputStream(path);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            Base64OutputStream b64os = new Base64OutputStream(baos, Base64.DEFAULT);
-            byte[] buffer = new byte[8192];
-            int bytesRead;
-            try {
-                while ((bytesRead = is.read(buffer)) > -1) {
-                    b64os.write(buffer, 0, bytesRead);
-                }
-                return baos.toString();
-            } catch (IOException e) {
-                Log.e("TAG", "Cannot read file " + path, e);
-                // Or throw if you prefer
-                return "";
-            } finally {
-                closeQuietly(is);
-                closeQuietly(b64os); // This also closes baos
-            }
-        } catch (FileNotFoundException e) {
-            Log.e("TAG", "File not found " + path, e);
-            // Or throw if you prefer
-            return "";
+
+        Bitmap bmp = null;
+        ByteArrayOutputStream bos = null;
+        byte[] bt = null;
+        String encodeString = null;
+        try{
+            bmp = BitmapFactory.decodeFile(path);
+            bos = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.JPEG, 70, bos);
+            bt = bos.toByteArray();
+            encodeString = Base64.encodeToString(bt, Base64.DEFAULT);
         }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return encodeString;
+
     }
 
     public static boolean isNetworkAvailable(Context mContext) {

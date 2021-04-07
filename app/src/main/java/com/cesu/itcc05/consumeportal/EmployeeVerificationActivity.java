@@ -111,6 +111,7 @@ public class EmployeeVerificationActivity extends AppCompatActivity {
             try {
                 URL url =null;
                 url = new URL(strURL);
+             /*   url = new URL(strURL);
                 URLConnection uc = url.openConnection();
                 uc.setDoInput(true);
                 BufferedReader in = null;
@@ -126,7 +127,7 @@ public class EmployeeVerificationActivity extends AppCompatActivity {
                 }
                 in.close();
 
-                Log.d("DemoApp", " fullString   " + a.toString());
+                Log.d("DemoApp", " fullString   " + a.toString());*/
 
                 DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
                 DocumentBuilder db = dbf.newDocumentBuilder();
@@ -147,7 +148,7 @@ public class EmployeeVerificationActivity extends AppCompatActivity {
                             iv_verify.setVisibility(View.VISIBLE);
                             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mContext);
                             alertDialogBuilder.setTitle("Alert");
-                            alertDialogBuilder.setMessage("Invalid Employee ID")
+                            alertDialogBuilder.setMessage("Employee Not Found")
                                     .setCancelable(false)
                                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
@@ -286,14 +287,21 @@ public class EmployeeVerificationActivity extends AppCompatActivity {
                 byte[] decodedString = Base64.decode(res[0], Base64.DEFAULT);
                 Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
-                if (res[0].toString().length()==0){
-                    iv_emp_image.setImageResource(R.drawable.no_image_user);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (res[0].toString().length()==0){
+                            iv_emp_image.setImageResource(R.drawable.no_image_user);
 
-                }
-                else {
-                    iv_emp_image.setImageBitmap(decodedByte);
+                        }
+                        else {
+                            iv_emp_image.setImageBitmap(decodedByte);
 
-                }
+                        }
+                    }
+                });
+
+
 
 
             } catch (Exception e) {

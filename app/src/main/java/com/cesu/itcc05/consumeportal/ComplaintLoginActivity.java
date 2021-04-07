@@ -601,9 +601,16 @@ public class ComplaintLoginActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner2.setAdapter(dataAdapter);
+        if (list.size() > 0) {
+            if (!CommonMethods.getSelectedPosition(context).isEmpty()) {
+                spinner2.setSelection(Integer.parseInt(CommonMethods.getSelectedPosition(context)));
+            }
+        }
+
         /////////////
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                CommonMethods.saveSelectedPosition(context, "" + position);
                 Object item = parent.getItemAtPosition(position);
                 // String value = String.valueOf(item.toString());
                 String value = String.valueOf(position);
@@ -952,9 +959,7 @@ public class ComplaintLoginActivity extends AppCompatActivity {
                 this.startActivity(i);
                 finish();
             }else{
-                Intent i = new Intent(this,QuicklinksDashboard.class);
-                this.startActivity(i);
-                finish();
+
             }
 
             return true;

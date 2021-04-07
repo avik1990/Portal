@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "227290777802",
+    "project_id": "tpcodl-mitra",
+    "storage_bucket": "tpcodl-mitra.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:227290777802:android:4497ad45a39df6d84a0c33",
+        "android_client_info": {
+          "package_name": "com.cesu.itcc05.consumeportal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "227290777802-pob0pk6i5lcfuopkb4oirpbivun6ke27.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC48F5cUhWa3I-RWIjqJivvvBMoFHBx-9Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "227290777802-pob0pk6i5lcfuopkb4oirpbivun6ke27.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

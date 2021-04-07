@@ -28,18 +28,13 @@
         android:src="@drawable/logo_new"
         />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollView3"
-        android:layout_below="@+id/iv_logo"
-        android:layout_gravity="center_horizontal" >
+
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:layout_below="@+id/iv_logo"
             android:layout_centerHorizontal="true">
 
             <TextView
@@ -49,6 +44,7 @@
                 android:id="@+id/conid"
                 android:textColor="#0d0101"
                 android:textSize="16sp"
+                android:text="asdfbghjuio"
                 android:textStyle="bold"
                 android:layout_gravity="center_horizontal" />
 
@@ -57,10 +53,22 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:id="@+id/conname"
-                android:layout_gravity="left"
+                android:layout_gravity="center"
                 android:textColor="#0d0101"
                 android:textSize="15dp"
+                android:text="axsdfghjsada"
                 android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/comreg"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="@string/proceed_for_complaint_register"
+                android:background="#6183c3"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_gravity="center"
+                android:layout_marginRight="10dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -73,10 +81,19 @@
                 android:textColor="#8c0404"
                 android:textStyle="bold" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_outage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+            </androidx.recyclerview.widget.RecyclerView>
+
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_gravity="center_horizontal">
 
                 <TextView
@@ -90,22 +107,7 @@
 
 
             </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:layout_marginTop="5dp">
 
-                <Button
-                    android:id="@+id/comreg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:text="@string/proceed_for_complaint_register"
-                    android:background="#6183c3"
-                    android:layout_marginRight="10dp" />
-            </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+
 </RelativeLayout>

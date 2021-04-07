@@ -16,16 +16,29 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import static java.lang.System.exit;
+import static java.lang.System.in;
 
 public class UserDashboardActivity extends AppCompatActivity {
 
     private ImageView iv_back;
     private LinearLayout viewBill;
+    private CardView cardview_feedback;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_dashboard);
         iv_back=findViewById(R.id.iv_backs);
+        cardview_feedback=findViewById(R.id.cardview_feedback);
+
+        cardview_feedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent=new Intent(UserDashboardActivity.this,FeedBackActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -148,7 +148,7 @@ public class PaymentCentreActivity extends AppCompatActivity implements PaymentC
             try {
                 URL url = null;
                 url = new URL(strURL);
-                URLConnection uc = url.openConnection();
+             /*   URLConnection uc = url.openConnection();
                 uc.setDoInput(true);
                 BufferedReader in = null;
                 in = new BufferedReader(new InputStreamReader(uc.getInputStream()));
@@ -163,7 +163,7 @@ public class PaymentCentreActivity extends AppCompatActivity implements PaymentC
                 }
                 in.close();
 
-                Log.d("DemoApp", " fullString   " + a.toString());
+                Log.d("DemoApp", " fullString   " + a.toString());*/
 
                 DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
                 DocumentBuilder db = dbf.newDocumentBuilder();

@@ -96,7 +96,7 @@
     <string name="bill_month">ବିଲ୍ ମାସ:</string>
     <string name="payable_amount">ଦେୟ ରାଶି:</string>
     <string name="due_date">ଧାର୍ଯ୍ୟ ତାରିଖ:</string>
-    <string name="outage">ବିଦ୍ୟୁତ୍ ବନ୍ଦ ସୂଚନା</string>
+    <string name="outage">ପାୱାର୍ କଟ୍ ଡିଟେଲ୍ |</string>
     <string name="outage_history_outage_details">ବିଦ୍ୟୁତ ସରବରାହ ବ୍ୟାଘାତ ବିବରଣୀ</string>
     <string name="safety">ସୁରକ୍ଷା</string>
     <string name="report_safety_incident">ଅସୁରକ୍ଷିତ ଘଟଣା ପଞ୍ଜିକରଣ କରନ୍ତୁ</string>
@@ -281,6 +281,16 @@
     <string name="please_provide_details_to_register_view_complaint">(ଅଭିଯୋଗ ପଞ୍ଜିକରଣ / ଦର୍ଶନ ପାଇଁ ଦୟାକରି ବିବରଣୀ ପ୍ରଦାନ କରନ୍ତୁ)</string>
     <string name="please_provide_details_to_register_theft_incident">(ଚୋରି ଘଟଣା ପଞ୍ଜିକରଣ କରିବାକୁ ଦୟାକରି ବିବରଣୀ ପ୍ରଦାନ କରନ୍ତୁ)</string>
     <string name="please_provide_details_to_verify_employee">(କର୍ମଚାରୀ ଯାଞ୍ଚ କରିବାକୁ ଦୟାକରି ବିବରଣୀ ପ୍ରଦାନ କରନ୍ତୁ)</string>
-
+    <string name="apply_new_connection">ନୂତନ ସଂଯୋଗ ପାଇଁ ଆବେଦନ କରନ୍ତୁ</string>
+    <string name="you_can_also_directly_message_us_on_this_number">* ଆପଣ ମଧ୍ୟ ଏହି ନମ୍ବରରେ ସିଧାସଳଖ ମେସେଜ୍ କରିପାରିବେ</string>
+    <string name="or_whatsapp_us_on_the_same_number">କିମ୍ବା ସମାନ ନମ୍ବରରେ ଆମକୁ whatsapp କରନ୍ତୁ</string>
+    <string name="division_name">Division ନାମ</string>
+    <string name="feeder_name">Feeder Name:</string>
+    <string name="affected_area">ପ୍ରଭାବିତ କ୍ଷେତ୍ର</string>
+    <string name="no_outage_found">କ O ଣସି ବାହାଘର ନାହିଁ</string>
+    <string name="start_date">ଆରମ୍ଭ ତାରିଖ</string>
+    <string name="affected_duration">ପ୍ରଭାବିତ ସମୟ:</string>
+    <string name="outage_reason">ବାହାଘର କାରଣ</string>
+    <string name="ask">ପଚାର</string>
     <!-- Finish. -->
 </resources>

@@ -221,6 +221,9 @@
         <activity
             android:name=".ViewPDFActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".LandingActivityConnection"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.cesu.itcc05.consumeportal.provider"

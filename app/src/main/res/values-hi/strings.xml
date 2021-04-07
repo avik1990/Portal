@@ -95,7 +95,7 @@
     <string name="bill_month">बिल का महीना:</string>
     <string name="payable_amount">भुगतान राशि:</string>
     <string name="due_date">नियत तारीख:</string>
-    <string name="outage">बिजली कटौती</string>
+    <string name="outage">बबिजली कटौती विवरण</string>
     <string name="outage_history_outage_details">कटौती इतिहास | विवरण</string>
     <string name="safety">सुरक्षा</string>
     <string name="report_safety_incident">असुरक्षित घटना दर्ज करे</string>
@@ -280,6 +280,16 @@
     <string name="please_provide_details_to_register_view_complaint">(शिकायत दर्ज करने / देखने के लिए कृपया विवरण प्रदान करें)</string>
     <string name="please_provide_details_to_register_theft_incident">(कृपया चोरी की घटना को दर्ज करने के लिए विवरण प्रदान करें)</string>
     <string name="please_provide_details_to_verify_employee">(कृपया कर्मचारी को सत्यापित करने के लिए विवरण प्रदान करें)</string>
-
+    <string name="apply_new_connection">नए कनेक्शन के लिए आवेदन</string>
+    <string name="you_can_also_directly_message_us_on_this_number">* आप हमें सीधे इस नंबर पर भी मैसेज कर सकते हैं</string>
+    <string name="or_whatsapp_us_on_the_same_number">या हमें उसी नंबर पर व्हाट्सएप कर सकते हैं</string>
+    <string name="division_name">Division का नाम</string>
+    <string name="feeder_name">Feeder Name:</string>
+    <string name="affected_area">प्रभावित क्षेत्र</string>
+    <string name="no_outage_found">कोई नुकसान नहीं</string>
+    <string name="start_date">आरंभ करने की तिथि</string>
+    <string name="affected_duration">प्रभावित समय:</string>
+    <string name="outage_reason">आउटेज कारण</string>
+    <string name="ask">पूछो</string>
     <!-- Finish. -->
 </resources>
